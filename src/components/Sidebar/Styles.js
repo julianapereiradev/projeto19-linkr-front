@@ -3,14 +3,17 @@ import styled from "styled-components";
 export const SideBarContainer = styled.aside`
   display: flex;
   flex-direction: column;
-  box-sizing: content-box;
+  box-sizing: border-box;
   background-color: #171717;
   border-radius: 15px;
-  padding: 1px 15px 10px;
+  padding: 15px;
   width: 20%;
+  height: 400px;
+  margin-top: 77px;
+  line-height: 32px;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.p`
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   font-size: 20px;
@@ -22,10 +25,10 @@ export const Line = styled.div`
   width: 100%;
   background-color: #484848;
   margin-bottom: 5px;
-  margin-top: 1px;
+  margin-top: 5px;
 `;
 
-export const Hashtag = styled.h2`
+export const Hashtag = styled.p`
   font-family: 'Lato', sans-serif;
   font-weight: 700;
   font-size: 15px;
