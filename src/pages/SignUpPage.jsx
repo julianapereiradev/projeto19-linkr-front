@@ -1,45 +1,46 @@
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import { backendroute, pages } from "../routes/routes";
-import { useState } from "react";
 
-export default function SignInPage() {
-  // const { setUser } = useContext(AuthContext)
-  const navigate = useNavigate();
-
+export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
   const [disable, setDisable] = useState(false);
 
-  function SignIn(e) {
+  const navigate = useNavigate();
+
+  function SignUp(e) {
     e.preventDefault();
 
-    const newSignIn = { email: email, password: password };
+    const newSignUp = {
+      email: email,
+      password: password,
+      username: username,
+      pictureUrl: pictureUrl,
+    };
 
     setDisable(true);
 
     axios
-      .post(backendroute.postSignIn, newSignIn)
+      .post(backendroute.postSignUp, newSignUp)
       .then((res) => {
-        // const newUser = {
-        //   token: res.data.token
-        // }
-        // setUser(newUser);
-        // localStorage.setItem("user", JSON.stringify(newUser))
-        navigate(pages.signUp); //mudar depois para home
+        navigate(pages.signIn);
         setDisable(false);
       })
       .catch((erro) => {
         alert(erro.response.data);
-        console.log("Erro em postSignIn", erro);
+        console.log("Erro em postSignUp", erro);
         setDisable(false);
       });
   }
 
   return (
-    <SingInContainer onSubmit={SignIn}>
+    <SingUpContainer onSubmit={SignUp}>
       <input
         type="email"
         autoComplete="email"
@@ -60,25 +61,43 @@ export default function SignInPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
+      <input
+        type="text"
+        autoComplete="username"
+        placeholder="username"
+        required
+        disabled={disable}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+
+      <input
+        type="text"
+        autoComplete="picture-url"
+        placeholder="picture url"
+        required
+        disabled={disable}
+        value={pictureUrl}
+        onChange={(e) => setPictureUrl(e.target.value)}
+      />
+
       <button type="submit" disabled={disable}>
         {disable ? (
           <ThreeDots type="ThreeDots" color="#000000" height={20} width={50} />
         ) : (
-          "Log In"
+          "Sign Up"
         )}
       </button>
-      <LinkToSignUp to={pages.signUp}>
-        First time? Create an account!
-      </LinkToSignUp>
-    </SingInContainer>
+      <LinkToSignIn to={pages.signIn}>Switch back to log in</LinkToSignIn>
+    </SingUpContainer>
   );
 }
 
-const SingInContainer = styled.form`
+const SingUpContainer = styled.form`
   //
 `;
 
-const LinkToSignUp = styled(Link)`
+const LinkToSignIn = styled(Link)`
   color: #000000;
   text-decoration: underline;
 `;
