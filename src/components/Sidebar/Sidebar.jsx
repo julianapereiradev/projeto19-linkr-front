@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SideBarContainer, Title, Line, Hashtag } from "./Styles";
 
-export default function App() {
+export default function Sidebar() {
   const [hashtags, setHashtags] = useState([
     "javascript", "react", "react-native", "material", "web-dev", "mobile", "css", "html", "node", "sql"
   ]);
