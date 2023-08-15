@@ -1,9 +1,10 @@
-import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
-import { backendroute, pages } from "../routes/routes";
+import { backendroute, pages } from "../../routes/routes";
 import { useState } from "react";
+import { SignInContainer, LeftContent,  RightContent, SignInForm, LinkToSignUp } from "./Styles"
 
 export default function SignInPage() {
   // const { setUser } = useContext(AuthContext)
@@ -39,7 +40,16 @@ export default function SignInPage() {
   }
 
   return (
-    <SingInContainer onSubmit={SignIn}>
+    <SignInContainer>
+
+      <LeftContent>
+        <h1><span>linkr</span></h1>
+        <h2>save, share and discover</h2>
+        <h2>the best links on the web</h2>
+      </LeftContent>
+
+      <RightContent>
+      <SignInForm onSubmit={SignIn}>
       <input
         type="email"
         autoComplete="email"
@@ -70,15 +80,9 @@ export default function SignInPage() {
       <LinkToSignUp to={pages.signUp}>
         First time? Create an account!
       </LinkToSignUp>
-    </SingInContainer>
+      </SignInForm>
+      </RightContent>
+
+    </SignInContainer>
   );
 }
-
-const SingInContainer = styled.form`
-  //
-`;
-
-const LinkToSignUp = styled(Link)`
-  color: #000000;
-  text-decoration: underline;
-`;
