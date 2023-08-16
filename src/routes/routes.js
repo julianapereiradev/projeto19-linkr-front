@@ -12,5 +12,6 @@ const API_URL = 'http://localhost:5000';
 export const backendroute = {
     postSignUp: API_URL + '/signup',
     postSignIn: API_URL + '/signin',
-    deleteLogout: API_URL + '/logout'
+    deleteLogout: API_URL + '/logout',
+    postLink: API_URL + '/timeline'
 }
