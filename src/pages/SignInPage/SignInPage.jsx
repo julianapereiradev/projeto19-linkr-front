@@ -25,8 +25,10 @@ export default function SignInPage() {
     axios
       .post(backendroute.postSignIn, newSignIn)
       .then((res) => {
+        console.log('res.data do login', res.data)
         const newUser = {
-          token: res.data.token
+          token: res.data.token,
+          pictureUrl: res.data.pictureUrl
         }
         setUser(newUser);
         localStorage.setItem("user", JSON.stringify(newUser))
