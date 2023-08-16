@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import {ColorText, Container, ContainerPost} from './Styles';
 import AuthContext from '../../contexts/AuthContext';
-import { validateUser } from '../../constants/functions';
+import { headersAuth, validateUser } from '../../constants/functions';
 import PublishBox from '../../components/PublishBox/PublishBox';
 import PostBox from '../../components/PostBox/PostBox';
 import { backendroute } from '../../routes/routes';
@@ -12,16 +12,11 @@ export default function TimelinePage() {
     const { user, setUser } = useContext(AuthContext);
 
   const [posts, setPosts] = useState([]);
+  
   useEffect(() => {
     validateUser(user, setUser);
-
-    const config = {
-      headers: {
-          Authorization: `Bearer ${user.token}`,
-      },
-    };
-  console.log(config);
-    axios.get(backendroute.postLink, config)
+    
+    axios.get(backendroute.postLink, headersAuth(user.token))
       .then(response => {
         setPosts(response.data);
         console.log(response);
