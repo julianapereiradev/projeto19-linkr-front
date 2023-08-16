@@ -1,12 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiSolidChevronDown, BiSolidChevronUp } from "react-icons/bi";
 import styled from "styled-components";
+import AuthContext from "../../contexts/AuthContext";
+import { backendroute, pages } from "../../routes/routes";
+import axios from "axios";
+import { headersAuth } from "../../constants/functions";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+
+  const { user, setUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const [image, setImage] = useState(
     "https://img.freepik.com/free-icon/user_318-644324.jpg"
   );
-
   const [showLogout, setShowLogout] = useState(false);
   const [arrowDirection, setArrowDirection] = useState("down");
 
@@ -35,9 +44,21 @@ export default function Header() {
     setArrowDirection(showLogout === true ? "down" : "up");
   };
 
-  function logout() {
-    return alert("Clicou em logout")
+  async function logout() {
+    try {
+      await axios.delete(backendroute.deleteLogout, headersAuth(user.token));
+    
+    } catch (error) {
+      alert(error.response.data.message);
+      console.log('error em deleteLogout')
+    }
+
+    localStorage.removeItem('user');
+    setUser(0);
+    navigate(pages.signIn)
   }
+
+  console.log('user em Header', user)
 
   return (
     <>
