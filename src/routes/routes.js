@@ -1,6 +1,7 @@
 export const pages = {
-    signUp: '/cadastro',
-    signIn: '/'
+    signUp: '/sign-up',
+    signIn: '/',
+    timeline: '/timeline'
 }
 
 const API_URL = 'http://localhost:5000';
