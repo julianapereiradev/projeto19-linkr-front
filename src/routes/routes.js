@@ -4,10 +4,10 @@ export const pages = {
     timeline: '/timeline'
 }
 
-const API_URL = 'http://localhost:5000';
+// const API_URL = 'http://localhost:5000';
 
 //Quando for fazer o deploy, mudar para:
-//const API_URL = `${process.env.REACT_APP_API_URL}`
+const API_URL = `${process.env.REACT_APP_API_URL}`
 
 export const backendroute = {
     postSignUp: API_URL + '/signup',
