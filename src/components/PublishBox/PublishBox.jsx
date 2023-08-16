@@ -84,6 +84,7 @@ const Container = styled.div`
     background-color: white;
     border-radius: 20px;
     display: flex;
+    margin-bottom: 25px;
 `
 const InputUrl = styled.input`
     width: 503px;
