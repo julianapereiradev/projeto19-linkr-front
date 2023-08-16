@@ -1,23 +1,29 @@
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { validateUser} from "../../constants/functions";
+import { validateUser } from "../../constants/functions";
 import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
+import { BiHeart } from "react-icons/bi";
 
 export default function PostBox({ post }) {
     const { user, setUser } = useContext(AuthContext);
     useEffect(() => {
 
-        validateUser(user, setUser); 
+        validateUser(user, setUser);
 
     }, [user]);
-     
+
     return (
         <>
             <Container>
-                <ContainerPhoto>
-                </ContainerPhoto>
+                <ContainerLike>
+                    <ContainerPhoto>
+                    </ContainerPhoto>
+                    <BiHeart size="30" color="#FFFFFF" />
+                    13 likes
+                </ContainerLike>
+
                 <ContainerContent>
                     <Username>Username</Username>
                     <Text>Conteúdo: {post.content}</Text>
@@ -37,7 +43,14 @@ const ContainerPhoto = styled.div`
     border-radius: 27px;
     margin: 16px;
     padding: 27px;
+  
 `
+const ContainerLike = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
 const ContainerContent = styled.div`
     display: flex;
     flex-direction: column;
@@ -50,7 +63,9 @@ const Container = styled.div`
     border-radius: 20px;
     display: flex;
     margin-bottom: 15px;
+   
 `
+
 
 const Text = styled.text`
     font-family: Lato;
