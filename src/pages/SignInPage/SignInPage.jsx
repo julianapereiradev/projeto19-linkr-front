@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import { backendroute, pages } from "../../routes/routes";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SignInContainer, LeftContent,  RightContent, SignInForm, LinkToSignUp } from "./Styles"
+import AuthContext from "../../contexts/AuthContext";
 
 export default function SignInPage() {
-  // const { setUser } = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext)
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -24,12 +25,12 @@ export default function SignInPage() {
     axios
       .post(backendroute.postSignIn, newSignIn)
       .then((res) => {
-        // const newUser = {
-        //   token: res.data.token
-        // }
-        // setUser(newUser);
-        // localStorage.setItem("user", JSON.stringify(newUser))
-        navigate(pages.signUp); //mudar depois para home
+        const newUser = {
+          token: res.data.token
+        }
+        setUser(newUser);
+        localStorage.setItem("user", JSON.stringify(newUser))
+        navigate(pages.timeline);
         setDisable(false);
       })
       .catch((erro) => {
