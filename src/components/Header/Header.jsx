@@ -69,12 +69,17 @@ export default function Header() {
               <BiSolidChevronUp color="#FFFFFF" size="50" />
             )}
           </Arrow>
-          <img src={user.pictureUrl} alt="Foto do usuário" onClick={toggleLogout} />
+          <img 
+          data-test="avatar"
+          src={user.pictureUrl} 
+          alt="Foto do usuário" 
+          onClick={toggleLogout} 
+          />
         </RightContainer>
       </HeaderContainer>
 
       <LogoutPosition>
-        {showLogout && <LogoutSection className="logout-section" onClick={() => logout()}>Logout</LogoutSection>}
+        {showLogout && <LogoutSection data-test="menu" className="logout-section"><button data-test="logout" onClick={() => logout()}>Logout</button></LogoutSection>}
       </LogoutPosition>
     </>
   );
@@ -125,12 +130,16 @@ const LogoutPosition = styled.div`
 
 const LogoutSection = styled.div`
   background-color: #151515;
-  color: white;
   padding: 10px 30px;
   text-align: center;
   border-bottom-left-radius: 15px;
   width: 130px;
+
+
+button {
+  background-color: #151515;
+  color: white;
   font-family: 'Lato', sans-serif;
   font-size: 17px;
-  cursor: pointer;
+}
 `;

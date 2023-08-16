@@ -54,6 +54,7 @@ export default function SignInPage() {
       <RightContent>
       <SignInForm onSubmit={SignIn}>
       <input
+        data-test="email"
         type="email"
         autoComplete="email"
         placeholder="e-mail"
@@ -64,6 +65,7 @@ export default function SignInPage() {
       />
 
       <input
+        data-test="password"
         type="password"
         placeholder="password"
         autoComplete="password"
@@ -73,7 +75,11 @@ export default function SignInPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button type="submit" disabled={disable}>
+      <button 
+      data-test="sign-up-link"
+      type="submit" 
+      disabled={disable}
+      >
         {disable ? (
           <ThreeDots type="ThreeDots" color="#000000" height={20} width={50} />
         ) : (
