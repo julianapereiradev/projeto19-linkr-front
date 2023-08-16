@@ -13,9 +13,6 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  const [image, setImage] = useState(
-    "https://img.freepik.com/free-icon/user_318-644324.jpg"
-  );
   const [showLogout, setShowLogout] = useState(false);
   const [arrowDirection, setArrowDirection] = useState("down");
 
@@ -72,7 +69,7 @@ export default function Header() {
               <BiSolidChevronUp color="#FFFFFF" size="50" />
             )}
           </Arrow>
-          <img src={image} onClick={toggleLogout} />
+          <img src={user.pictureUrl} alt="Foto do usuário" onClick={toggleLogout} />
         </RightContainer>
       </HeaderContainer>
 
@@ -112,6 +109,7 @@ const RightContainer = styled.div`
 
   img {
     height: 50px;
+    border-radius: 50%;
   }
 `;
 
