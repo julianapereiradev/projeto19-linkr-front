@@ -19,7 +19,6 @@ export default function TimelinePage() {
     axios.get(backendroute.postLink, headersAuth(user.token))
       .then(response => {
         setPosts(response.data);
-        console.log(response);
       })
       .catch(error => {
         console.error('Erro ao buscar posts:', error);

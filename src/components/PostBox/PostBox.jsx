@@ -1,28 +1,65 @@
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { validateUser} from "../../constants/functions";
+import { validateUser } from "../../constants/functions";
 import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
+import { headersAuth } from "../../constants/functions";
+import urlMetadata from "url-metadata";
 
 export default function PostBox({ post }) {
+    const [userData, setUserData] = useState(null);
+    const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
     const { user, setUser } = useContext(AuthContext);
     useEffect(() => {
+        validateUser(user, setUser);
 
-        validateUser(user, setUser); 
+        async function fetchUserData() {
+            try {
+                const response = await axios.post(backendroute.getUserById, {
+                    userId: post.userId,
+                }, headersAuth(user.token));
+                setUserData(response.data);
+            } catch (error) {
+                console.error('Erro ao buscar dados do usuário:', error);
+            }
+        }
+        async function fetchUrlMetadata() {
+            try {
+                const metadata = await urlMetadata(post.url);
+                setUrlMetadataInfo(metadata);
+            } catch (error) {
+                console.error('Erro ao buscar metadados da URL:', error);
+            }
+        }
 
-    }, [user]);
-     
+
+        if (post) {
+            fetchUserData();
+            if (post.url) {
+                fetchUrlMetadata();
+            }
+        }
+    }, [post, user.token]);
+
     return (
         <>
             <Container>
                 <ContainerPhoto>
+                    {userData && <UserImage src={userData.pictureUrl} alt="Foto do Usuário" />}
                 </ContainerPhoto>
                 <ContainerContent>
-                    <Username>Username</Username>
-                    <Text>Conteúdo: {post.content}</Text>
+                    {userData && <Username>{userData.username}</Username>}
+                    <Text>{post.content}</Text>
                     <Link>
                         <h1>Link: {post.url}</h1>
+                        {urlMetadataInfo && (
+                            <div>
+                                <p>{urlMetadataInfo.title}</p>
+                                <p>{urlMetadataInfo.description}</p>
+                                <p> <img src={urlMetadataInfo.image} alt="URL Image" /></p>
+                            </div>
+                        )}
                     </Link>
                 </ContainerContent>
             </Container>
@@ -30,13 +67,21 @@ export default function PostBox({ post }) {
     );
 }
 
+const UserImage = styled.img`
+    width: 50px;
+    height: 50px;
+    border-radius: 27px;
+`
+
 const ContainerPhoto = styled.div`
-    background-color:red;
     width: 50px;
     height: 50px;
     border-radius: 27px;
     margin: 16px;
     padding: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 const ContainerContent = styled.div`
     display: flex;
@@ -60,6 +105,8 @@ const Text = styled.text`
     letter-spacing: 0em;
     text-align: left;
     color: #B7B7B7;
+    margin-top: 10px;
+    margin-bottom: 10px;
 `
 const Username = styled.text`
     font-family: Lato;
