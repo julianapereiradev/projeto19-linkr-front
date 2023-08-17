@@ -1,54 +1,84 @@
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { validateUser } from "../../constants/functions";
+import { headersAuth, validateUser } from "../../constants/functions";
 import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
-import { headersAuth } from "../../constants/functions";
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
 import urlMetadata from "url-metadata";
 
 export default function PostBox({ post }) {
     const [userData, setUserData] = useState(null);
     const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
     const { user, setUser } = useContext(AuthContext);
+    const [isLiked, setIsLiked] = useState(false)
+
     useEffect(() => {
         validateUser(user, setUser);
+}, [user]);
 
-        async function fetchUserData() {
-            try {
-                const response = await axios.post(backendroute.getUserById, {
-                    userId: post.userId,
-                }, headersAuth(user.token));
-                setUserData(response.data);
-            } catch (error) {
-                console.error('Erro ao buscar dados do usuário:', error);
-            }
-        }
-        async function fetchUrlMetadata() {
-            try {
-                const metadata = await urlMetadata(post.url);
-                setUrlMetadataInfo(metadata);
-            } catch (error) {
-                console.error('Erro ao buscar metadados da URL:', error);
-            }
-        }
+function like(p){
+    if ( !isLiked ){
+        setIsLiked(true)
+    } else {
+        setIsLiked(false)
+    }
+    const body = {
+        userId: p.userId,
+        postId: p.id
+    }
 
+    const promise = axios.post(backendroute.likes, body, headersAuth(user.token));
+    promise.then((res) => {
+        console.log(res.data)
+    })
+    promise.catch((err) => {
+        alert(err.response.data)
+    })
+}
 
-        if (post) {
-            fetchUserData();
-            if (post.url) {
-                fetchUrlMetadata();
-            }
-        }
-    }, [post, user.token]);
+async function fetchUserData() {
+    try {
+        const response = await axios.post(backendroute.getUserById, {
+            userId: post.userId,
+        }, headersAuth(user.token));
+        setUserData(response.data);
+    } catch (error) {
+        console.error('Erro ao buscar dados do usuário:', error);
+    }
+}
 
-    return (
-        <>
-            <Container>
+async function fetchUrlMetadata() {
+    try {
+        const metadata = await urlMetadata(post.url);
+        setUrlMetadataInfo(metadata);
+    } catch (error) {
+        console.error('Erro ao buscar metadados da URL:', error);
+    }
+}
+
+if (post) {
+    fetchUserData();
+    if (post.url) {
+        fetchUrlMetadata();
+    }
+}
+
+return (
+    <>
+        <Container>
+            <ContainerLike>
                 <ContainerPhoto>
                     {userData && <UserImage src={userData.pictureUrl} alt="Foto do Usuário" />}
                 </ContainerPhoto>
-                <ContainerContent>
+                {isLiked ?
+                <FiHeart size="27" color="#FFF" onClick={() => like(post)}/>
+                :  
+                <FaHeart size="27" color="#AC0000" onClick={() => like(post)}/>
+                }
+            </ContainerLike>
+              <ContainerContent>
                     {userData && <Username>{userData.username}</Username>}
                     <Text>{post.content}</Text>
                     <Link>
@@ -62,9 +92,10 @@ export default function PostBox({ post }) {
                         )}
                     </Link>
                 </ContainerContent>
-            </Container>
-        </>
-    );
+        </Container>
+    </>
+);
+              
 }
 
 const UserImage = styled.img`
@@ -83,6 +114,12 @@ const ContainerPhoto = styled.div`
     justify-content: center;
     align-items: center;
 `
+const ContainerLike = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
 const ContainerContent = styled.div`
     display: flex;
     flex-direction: column;
@@ -95,8 +132,8 @@ const Container = styled.div`
     border-radius: 20px;
     display: flex;
     margin-bottom: 15px;
+   
 `
-
 const Text = styled.text`
     font-family: Lato;
     font-size: 17px;
