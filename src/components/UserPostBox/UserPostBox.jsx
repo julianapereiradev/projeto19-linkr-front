@@ -1,25 +1,19 @@
 import { useContext, useState } from "react";
 import { styled } from "styled-components";
-import AuthContext from "../../contexts/AuthContext";
 import axios from "axios";
-import { backendroute, pages } from "../../routes/routes";
-import { headersAuth } from "../../constants/functions";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import urlMetadata from "url-metadata";
-import { useNavigate } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
+import { backendroute } from "../../routes/routes";
+import { headersAuth } from "../../constants/functions";
 
-export default function PostBox({ post }) {
+export default function UserPostBox({ post }) {
   const { user } = useContext(AuthContext);
 
   const [isLiked, setIsLiked] = useState(false);
   const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
 
-  const navigate = useNavigate();
-
-  function openUrlId(userId) {
-    navigate(pages.userPosts + userId)
-};  
 
   function like(p) {
     if (!isLiked) {
@@ -69,8 +63,7 @@ export default function PostBox({ post }) {
         <ContainerLike>
           <ContainerPhoto>
             <UserImage 
-            onClick={() => openUrlId(post.userId)}
-            src={post.pictureUrl} alt="Usuário" />
+            src={post.pictureUrl} alt="Foto do Usuário" />
           </ContainerPhoto>
 
           {isLiked ? (
@@ -81,7 +74,7 @@ export default function PostBox({ post }) {
         </ContainerLike>
 
         <ContainerContent>
-          <Username onClick={() => openUrlId(post.userId)}>{post.username}</Username>
+          <Username>{post.username}</Username>
           <Text>{post.content}</Text>
           <Link>
             <h1>Link: {post.url}</h1>
