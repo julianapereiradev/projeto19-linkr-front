@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import axios from "axios";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
-import urlMetadata from "url-metadata";
+//import urlMetadata from "url-metadata";
 import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
 import { headersAuth } from "../../constants/functions";
@@ -39,6 +39,7 @@ export default function UserPostBox({ post }) {
     });
   }
 
+  /*
   async function fetchUrlMetadata() {
     try {
       const metadata = await urlMetadata(post.url);
@@ -47,6 +48,7 @@ export default function UserPostBox({ post }) {
       console.error("Erro ao buscar metadados da URL:", error);
     }
   }
+  */
 
   // if (post) {
   // // fetchUserData();
@@ -79,7 +81,7 @@ export default function UserPostBox({ post }) {
           <Link>
             <h1>Link: {post.url}</h1>
 
-            {urlMetadataInfo && (
+            {/*{urlMetadataInfo && (
               <div>
                 <p>{urlMetadataInfo.title}</p>
                 <p>{urlMetadataInfo.description}</p>
@@ -87,7 +89,8 @@ export default function UserPostBox({ post }) {
                   <img src={urlMetadataInfo.image} alt="metadata" />
                 </p>
               </div>
-            )}
+            )}*/}
+            
           </Link>
         </ContainerContent>
       </Container>

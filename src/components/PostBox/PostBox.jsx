@@ -6,7 +6,7 @@ import { backendroute, pages } from "../../routes/routes";
 import { headersAuth } from "../../constants/functions";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
-import urlMetadata from "url-metadata";
+//import urlMetadata from "url-metadata";
 import { useNavigate } from "react-router-dom";
 
 import reactStringReplace from 'react-string-replace';
@@ -47,6 +47,7 @@ export default function PostBox({ post }) {
         });
     }
 
+    /*
     async function fetchUrlMetadata() {
         try {
             const metadata = await urlMetadata(post.url);
@@ -55,6 +56,8 @@ export default function PostBox({ post }) {
             console.error("Erro ao buscar metadados da URL:", error);
         }
     }
+    */
+    
 
     // if (post) {
     // // fetchUserData();
@@ -93,7 +96,7 @@ export default function PostBox({ post }) {
                     <Link>
                         <h1>Link: {post.url}</h1>
 
-                        {urlMetadataInfo && (
+                        {/*{urlMetadataInfo && (
                             <div>
                                 <p>{urlMetadataInfo.title}</p>
                                 <p>{urlMetadataInfo.description}</p>
@@ -101,7 +104,8 @@ export default function PostBox({ post }) {
                                     <img src={urlMetadataInfo.image} alt="metadata" />
                                 </p>
                             </div>
-                        )}
+                        )}*/}
+
                     </Link>
                 </ContainerContent>
             </Container>
