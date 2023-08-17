@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import Header from "../components/Header/Header";
-import Sidebar from "../components/Sidebar/Sidebar";
-import { useParams } from "react-router-dom";
+import Header from "../../components/Header/Header";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import { useNavigate, useParams } from "react-router-dom";
 import { BiHeart } from "react-icons/bi";
-import { backendroute } from "../routes/routes";
+import { backendroute } from "../../routes/routes";
+import reactStringReplace from 'react-string-replace';
 import axios from "axios";
 
 export default function HashtagPage() {
@@ -16,19 +17,22 @@ export default function HashtagPage() {
   }]);
 
   const params = useParams();
+
+  const navigate = useNavigate();
+  
   const hashtag = params.hashtag;
 
+
   useEffect(() => {
-    /*
-    const config = { headers: { Authorization: `Bearer ${token}` } };
-    axios.get(backendroute.getHashtagPosts + hashtag, config);
+    
+    //const config = { headers: { Authorization: `Bearer ${token}` } };
+    axios.get(backendroute.getHashtagPosts + hashtag)
       .then(res => {
         setPosts(res.data);
       })
       .catch(res => {
         console.log("Failed to get posts containing the hashtag", res.data.message);
       });
-    */
   }, []);
 
 
@@ -48,9 +52,11 @@ export default function HashtagPage() {
               </LeftContainer>
               <RightContainer>
                 <Name>{post.name}</Name>
-                
-                <Content>{post.content}</Content>
-                
+                <Content>
+                  {reactStringReplace(post.content, /(?<=[\s>]|^)#(\w*[A-Za-z_]+\w*)/g, (match, i) => (
+                    <span onClick={() => navigate(`/hashtag/${match}`)}>#{match}</span>
+                  ))};
+                </Content>
                 <Url></Url>
               </RightContainer>
             </Post>
@@ -130,6 +136,9 @@ const Content = styled.p`
   font-weight: 400;
   font-size: 17px;
   font-family: 'Lato', sans-serif;
+  span {
+    font-weight: 900;
+  }
 `
 
 const Url = styled.div`

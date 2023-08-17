@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import { backendroute, pages } from "../../routes/routes";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SignInContainer, LeftContent,  RightContent, SignInForm, LinkToSignUp } from "./Styles"
+import AuthContext from "../../contexts/AuthContext";
 
 export default function SignInPage() {
-  // const { setUser } = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext)
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -24,12 +25,14 @@ export default function SignInPage() {
     axios
       .post(backendroute.postSignIn, newSignIn)
       .then((res) => {
-        // const newUser = {
-        //   token: res.data.token
-        // }
-        // setUser(newUser);
-        // localStorage.setItem("user", JSON.stringify(newUser))
-        navigate(pages.signUp); //mudar depois para home
+        console.log('res.data do login', res.data)
+        const newUser = {
+          token: res.data.token,
+          pictureUrl: res.data.pictureUrl
+        }
+        setUser(newUser);
+        localStorage.setItem("user", JSON.stringify(newUser))
+        navigate(pages.timeline);
         setDisable(false);
       })
       .catch((erro) => {
@@ -51,6 +54,7 @@ export default function SignInPage() {
       <RightContent>
       <SignInForm onSubmit={SignIn}>
       <input
+        data-test="email"
         type="email"
         autoComplete="email"
         placeholder="e-mail"
@@ -61,6 +65,7 @@ export default function SignInPage() {
       />
 
       <input
+        data-test="password"
         type="password"
         placeholder="password"
         autoComplete="password"
@@ -70,14 +75,21 @@ export default function SignInPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button type="submit" disabled={disable}>
+      <button 
+      data-test="login-btn"
+      type="submit" 
+      disabled={disable}
+      >
         {disable ? (
           <ThreeDots type="ThreeDots" color="#000000" height={20} width={50} />
         ) : (
           "Log In"
         )}
       </button>
-      <LinkToSignUp to={pages.signUp}>
+      <LinkToSignUp 
+      data-test="sign-up-link"
+      to={pages.signUp}
+      >
         First time? Create an account!
       </LinkToSignUp>
       </SignInForm>

@@ -1,9 +1,11 @@
 export const pages = {
-    signUp: '/cadastro',
-    signIn: '/'
+    signUp: '/sign-up',
+    signIn: '/',
+    timeline: '/timeline',
+    hashtag: '/hashtag/:id'
 }
 
-const API_URL = 'http://localhost:5000';
+ const API_URL = 'http://localhost:5000';
 
 //Quando for fazer o deploy, mudar para:
 //const API_URL = `${process.env.REACT_APP_API_URL}`
@@ -13,5 +15,6 @@ export const backendroute = {
     postSignIn: API_URL + '/signin',
     deleteLogout: API_URL + '/logout',
     getTrendingHashtags: API_URL + '/trending',
-    getHashtagPosts: API_URL + '/hashtag/'
+    getHashtagPosts: API_URL + '/hashtag/',
+    postLink: API_URL + '/timeline'
 }

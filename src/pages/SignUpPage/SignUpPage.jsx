@@ -57,6 +57,7 @@ export default function SignUpPage() {
       <RightContent>
         <SignUpForm onSubmit={SignUp}>
           <input
+            data-test="email"
             type="email"
             autoComplete="email"
             placeholder="e-mail"
@@ -67,6 +68,7 @@ export default function SignUpPage() {
           />
 
           <input
+            data-test="password"
             type="password"
             placeholder="password"
             autoComplete="password"
@@ -77,6 +79,7 @@ export default function SignUpPage() {
           />
 
           <input
+            data-test="username"
             type="text"
             autoComplete="username"
             placeholder="username"
@@ -87,6 +90,7 @@ export default function SignUpPage() {
           />
 
           <input
+            data-test="picture-url"
             type="text"
             autoComplete="picture-url"
             placeholder="picture url"
@@ -96,7 +100,11 @@ export default function SignUpPage() {
             onChange={(e) => setPictureUrl(e.target.value)}
           />
 
-          <button type="submit" disabled={disable}>
+          <button 
+          data-test="sign-up-btn"
+          type="submit" 
+          disabled={disable}
+          >
             {disable ? (
               <ThreeDots
                 type="ThreeDots"
@@ -108,7 +116,10 @@ export default function SignUpPage() {
               "Sign Up"
             )}
           </button>
-          <LinkToSignIn to={pages.signIn}>Switch back to log in</LinkToSignIn>
+          <LinkToSignIn 
+          data-test="login-link"
+          to={pages.signIn}
+          >Switch back to log in</LinkToSignIn>
         </SignUpForm>
       </RightContent>
       
