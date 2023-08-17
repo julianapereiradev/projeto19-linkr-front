@@ -76,7 +76,7 @@ export default function SignInPage() {
       />
 
       <button 
-      data-test="sign-up-link"
+      data-test="login-btn"
       type="submit" 
       disabled={disable}
       >
@@ -86,7 +86,10 @@ export default function SignInPage() {
           "Log In"
         )}
       </button>
-      <LinkToSignUp to={pages.signUp}>
+      <LinkToSignUp 
+      data-test="sign-up-link"
+      to={pages.signUp}
+      >
         First time? Create an account!
       </LinkToSignUp>
       </SignInForm>
