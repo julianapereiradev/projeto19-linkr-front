@@ -28,7 +28,8 @@ export default function SignInPage() {
         console.log('res.data do login', res.data)
         const newUser = {
           token: res.data.token,
-          pictureUrl: res.data.pictureUrl
+          pictureUrl: res.data.pictureUrl,
+          username: res.data.username
         }
         setUser(newUser);
         localStorage.setItem("user", JSON.stringify(newUser))

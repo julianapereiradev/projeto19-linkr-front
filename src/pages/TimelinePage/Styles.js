@@ -9,7 +9,7 @@ export const ColorText = styled.h1`
     letter-spacing: 0em;
     text-align: left;
 `;
-export const Container = styled.div`
+export const ContainerTimeline = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;

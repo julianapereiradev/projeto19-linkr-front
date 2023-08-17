@@ -1,72 +1,44 @@
 import styled from "styled-components";
-import { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { validateUser} from "../../constants/functions";
-import AuthContext from "../../contexts/AuthContext";
-import { backendroute } from "../../routes/routes";
+
+export default function PublishBox({
+  user,
+  url,
+  content,
+  disable,
+  onUrlChange,
+  onContentChange,
+  onPublish
+}) {
 
 
-export default function PublishBox() {
-    const [url, setUrl] = useState(''); 
-    const [content, setContent] = useState(''); 
-    const { user, setUser } = useContext(AuthContext);
-    useEffect(() => {
-
-        validateUser(user, setUser); 
-
-    }, [user]);
-    
-    const handlePublish = async () => {
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            },
-        };
-        console.log(config);
-
-      try {
-        const response = await axios.post(backendroute.postLink, {
-          url,
-          content,
-        }, config);
-  
-        if (response.status === 201) {
-          console.log('Link publicado com sucesso!');
-    
-        }
-      } catch (error) {
-        console.error('Erro ao publicar link:', error);
-      }
-    };
-  
-    return (
-        <>
-            <Container>
-                <ContainerPhoto>
-                </ContainerPhoto>
-                <ContainerInputs>
-                    <Text>What are you going to share today?</Text>
-                    <InputUrl 
-                        type="text" 
-                        placeholder="http://" 
-                        value={url} 
-                        onChange={(e) => setUrl(e.target.value)}
-                    />
-                    <InputContent 
-                        type="text"
-                        placeholder="Awesome article about #javascript"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}     
-                    />
-                    <Button onClick={handlePublish}>Publish</Button>
-                </ContainerInputs>
-            </Container>
-        </>
-    );
+  return (
+    <Container>
+      <ContainerPhoto src={user.pictureUrl} alt="Foto do usuário" />
+      <ContainerInputs>
+        <Text>O que você vai compartilhar hoje?</Text>
+        <InputUrl
+          type="text"
+          placeholder="http://"
+          value={url}
+          onChange={onUrlChange}
+          disabled={disable}
+        />
+        <InputContent
+          type="text"
+          placeholder="Artigo incrível sobre #javascript"
+          value={content}
+          onChange={onContentChange}
+          disabled={disable}
+        />
+        <Button onClick={onPublish} disabled={disable}>
+          Publish
+        </Button>
+      </ContainerInputs>
+    </Container>
+  );
 }
 
-const ContainerPhoto = styled.div`
+const ContainerPhoto = styled.img`
     background-color:red;
     width: 50px;
     height: 50px;
