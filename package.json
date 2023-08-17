@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@mdnm/react-hashtag": "^3.0.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,6 +17,7 @@
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "react-string-replace": "^1.1.1",
     "styled-components": "^6.0.7",
     "web-vitals": "^2.1.4"
   },
