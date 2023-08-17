@@ -1,18 +1,42 @@
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { validateUser } from "../../constants/functions";
+import { headersAuth, validateUser } from "../../constants/functions";
 import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
-import { BiHeart } from "react-icons/bi";
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
+
 
 export default function PostBox({ post }) {
     const { user, setUser } = useContext(AuthContext);
+    const [isLiked, setIsLiked] = useState(false)
+
     useEffect(() => {
 
         validateUser(user, setUser);
 
     }, [user]);
+
+    function like(p){
+        if ( !isLiked ){
+            setIsLiked(true)
+        }else{
+            setIsLiked(false)
+        }
+        const body = {
+            userId: p.userId,
+            postId: p.id
+        }
+
+        const promise = axios.post(backendroute.likes, body, headersAuth(user.token))
+        promise.then((res) => {
+            console.log(res.data)
+        })
+        promise.catch((err) => {
+            alert(err.response.data)
+        })
+    }
 
     return (
         <>
@@ -20,8 +44,11 @@ export default function PostBox({ post }) {
                 <ContainerLike>
                     <ContainerPhoto>
                     </ContainerPhoto>
-                    <BiHeart size="30" color="#FFFFFF" />
-                    13 likes
+                    {isLiked ?
+                    <FiHeart size="27" color="#FFF" onClick={() => like(post)}/>
+                    :  
+                    <FaHeart size="27" color="#AC0000" onClick={() => like(post)}/>
+                    }
                 </ContainerLike>
 
                 <ContainerContent>

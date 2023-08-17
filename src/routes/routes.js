@@ -13,5 +13,6 @@ export const backendroute = {
     postSignUp: API_URL + '/signup',
     postSignIn: API_URL + '/signin',
     deleteLogout: API_URL + '/logout',
-    postLink: API_URL + '/timeline'
+    postLink: API_URL + '/timeline',
+    likes: API_URL + '/like'
 }
