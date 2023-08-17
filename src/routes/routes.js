@@ -1,7 +1,8 @@
 export const pages = {
     signUp: '/sign-up',
     signIn: '/',
-    timeline: '/timeline'
+    timeline: '/timeline',
+    userPosts: '/user/'
 }
 
 const API_URL = 'http://localhost:5000';
@@ -16,5 +17,6 @@ export const backendroute = {
     postLink: API_URL + '/timeline',
     getAllPosts: API_URL + '/timeline',
     likes: API_URL + '/like',
-    getUserById: API_URL + '/timeline/user'
+    getUserById: API_URL + '/timeline/user',
+    getAllPostsByUserId: API_URL + '/user/'
 }
