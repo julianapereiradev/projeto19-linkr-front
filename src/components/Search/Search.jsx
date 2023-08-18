@@ -14,7 +14,7 @@ export default function Search({ onClick }) {
     if (name.length >= 3) {
       const getData = setTimeout(() => {
         axios
-        .get(`http://localhost:5000/search/${name}`, headersAuth(user.token))
+        .get(`https://linkr-api-enf4.onrender.com/search/${name}`, headersAuth(user.token))
         .then((response) => {
           setResult(response.data);
           console.log('response de searchByName', response)
