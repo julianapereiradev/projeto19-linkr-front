@@ -64,6 +64,7 @@ const Container = styled.div`
     border-radius: 20px;
     display: flex;
     margin-bottom: 25px;
+    margin-top: 50px;
 `
 const InputUrl = styled.input`
     width: 503px;
