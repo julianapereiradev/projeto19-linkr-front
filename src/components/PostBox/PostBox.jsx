@@ -116,11 +116,11 @@ export default function PostBox({ post }) {
             <Username onClick={() => openUrlId(post.userId)}>
               {post.username}
             </Username>
-            <TbTrashFilled
-              onClick={openDeleteModal}
+            <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}><TbTrashFilled
               color="#FFFFFF"
               size="25"
-            />
+            /></ButtonTrash>
+            
           </ContainerTrashRow>
 
           <Modal
@@ -152,7 +152,11 @@ export default function PostBox({ post }) {
             <DivInsideModal>
             <h2 style={{textAlign: 'center'}}>Are you sure you want to delete this post?</h2>
             <ButtonsModal>
+              <button data-test="cancel" onClick={() => setShowDeleteModal(false)}>
+                No, go back
+              </button>
               <ButtonYes
+                data-test="confirm"
                 onClick={() => trashIconClicked(post.id)}
                 disabled={isLoading}
               >
@@ -167,9 +171,6 @@ export default function PostBox({ post }) {
                   "Yes, delete it"
                 )}
               </ButtonYes>
-              <button onClick={() => setShowDeleteModal(false)}>
-                No, go back
-              </button>
             </ButtonsModal>
             </DivInsideModal>
            
@@ -375,4 +376,10 @@ const ButtonsModal = styled.div`
 const ButtonYes = styled.button`
 background-color: #FFFFFF;
 color: #1877F2;
+`;
+
+const ButtonTrash = styled.button`
+width: 25px;
+height: 25px;
+background-color: #151515;
 `;
