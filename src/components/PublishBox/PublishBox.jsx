@@ -30,13 +30,20 @@ export default function PublishBox({
           onChange={onContentChange}
           disabled={disable}
         />
-        <Button onClick={onPublish} disabled={disable}>
-          Publish
-        </Button>
+        <ButtonContainer>
+          <Button onClick={onPublish} disabled={disable}>
+            Publish
+          </Button>
+        </ButtonContainer>
       </ContainerInputs>
     </Container>
   );
 }
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
 
 const ContainerPhoto = styled.img`
     background-color:red;
@@ -57,6 +64,7 @@ const Container = styled.div`
     border-radius: 20px;
     display: flex;
     margin-bottom: 25px;
+    margin-top: 50px;
 `
 const InputUrl = styled.input`
     width: 503px;

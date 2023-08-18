@@ -63,8 +63,6 @@ export default function Header() {
   };
 
 
-  console.log('user em Header', user)
-
   return (
     <>
       <HeaderContainer className="header-box">
@@ -98,7 +96,7 @@ export default function Header() {
 
 const HeaderContainer = styled.div`
   width: 100%;
-  height: 70px;
+  height: 72px;
   top: 0;
   left: 0;
   background-color: #151515;
@@ -125,6 +123,7 @@ const RightContainer = styled.div`
 
   img {
     height: 50px;
+    width: 50px;
     border-radius: 50%;
   }
 `;
@@ -137,6 +136,8 @@ const LogoutPosition = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  position: absolute;
+  right: 0;
 `;
 
 const LogoutSection = styled.div`
