@@ -23,7 +23,7 @@ export default function Search({ onClick }) {
           console.log('error de getSearchName aqui', error)
         setResult("")
         });
-      }, 3000);
+      }, 300);
 
       return () => clearTimeout(getData);
     } else {
@@ -31,7 +31,6 @@ export default function Search({ onClick }) {
     }
 // eslint-disable-next-line
   }, [name]);
-
 
   return (
     <SearchContainer>
@@ -53,7 +52,7 @@ export default function Search({ onClick }) {
     </SearchContainer>
   );
 }
-
+ 
 const SearchContainer = styled.div`
 width: 583px;
 height: 45px;
