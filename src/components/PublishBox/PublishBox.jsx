@@ -5,6 +5,7 @@ export default function PublishBox({
   url,
   content,
   disable,
+  publishing,
   onUrlChange,
   onContentChange,
   onPublish
@@ -32,8 +33,8 @@ export default function PublishBox({
           disabled={disable}
         />
         <ButtonContainer>
-          <Button data-test="publish-btn" onClick={onPublish} disabled={disable}>
-            Publish
+          <Button data-test="publish-btn" onClick={onPublish} disabled={disable || publishing}>
+            {publishing ? "Publishing..." : "Publish"}
           </Button>
         </ButtonContainer>
       </ContainerInputs>

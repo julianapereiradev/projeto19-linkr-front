@@ -18,6 +18,7 @@ export default function TimelinePage() {
   const [url, setUrl] = useState("");
   const [content, setContent] = useState("");
   const [disable, setDisable] = useState(false);
+  const [publishing, setPublishing] = useState(false);
 
   useEffect(() => {
     validateUser(user, setUser);
@@ -38,6 +39,7 @@ export default function TimelinePage() {
   function postUrlLink(e) {
     e.preventDefault();
     setDisable(true);
+    setPublishing(true);
 
     const informations = { url: url, content: content };
 
@@ -45,11 +47,15 @@ export default function TimelinePage() {
       .post(backendroute.postLink, informations, headersAuth(user.token))
       .then((resp) => {
         console.log(resp.data);
-        window.location.reload();
+        setUrl("");
+        setContent("");
+        setPublishing(false);
         setDisable(false);
+        window.location.reload();
       })
       .catch((error) => {
         alert(error.response.data);
+        setPublishing(false);
         setDisable(false);
       });
   }
@@ -57,16 +63,15 @@ export default function TimelinePage() {
   return (
     <>
       <Header />
-
       <ContainerTimeline>
         <ContainerPost>
           <ColorText>timeline</ColorText>
-
           <PublishBox
             user={user}
             url={url}
             content={content}
             disable={disable}
+            publishing={publishing} 
             onUrlChange={(e) => setUrl(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             onPublish={postUrlLink}
