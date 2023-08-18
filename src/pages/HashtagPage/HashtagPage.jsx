@@ -3,30 +3,23 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { useNavigate, useParams } from "react-router-dom";
-import { BiHeart } from "react-icons/bi";
 import { backendroute } from "../../routes/routes";
-import reactStringReplace from 'react-string-replace';
+import PostBox from "../../components/PostBox/PostBox";
 import axios from "axios";
 
 export default function HashtagPage() {
-  const [posts, setPosts] = useState([{
-    name: "Juvenal Juvêncio",
-    image: "https://img.freepik.com/free-icon/user_318-644324.jpg",
-    likes: 13,
-    content: "Muito maneiro esse tutorial de Material UI com React, deem uma olhada! #react #material"
-  }]);
+  const [posts, setPosts] = useState(undefined);
 
   const params = useParams();
 
   const navigate = useNavigate();
-  
+
   const hashtag = params.hashtag;
 
 
   useEffect(() => {
-    
-    //const config = { headers: { Authorization: `Bearer ${token}` } };
-    axios.get(backendroute.getHashtagPosts + hashtag)
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+    axios.get(backendroute.getHashtagPosts + hashtag, config)
       .then(res => {
         setPosts(res.data);
       })
@@ -43,23 +36,12 @@ export default function HashtagPage() {
         <PostsContainer>
           <Title># {hashtag}</Title>
 
-          {posts.map((post, index) =>
-            <Post key={index}>
-              <LeftContainer>
-                <img src={post.image} />
-                <BiHeart size="30" color="#FFFFFF" />
-                <Likes>{post.likes} likes</Likes>
-              </LeftContainer>
-              <RightContainer>
-                <Name>{post.name}</Name>
-                <Content>
-                  {reactStringReplace(post.content, /(?<=[\s>]|^)#(\w*[A-Za-z_]+\w*)/g, (match, i) => (
-                    <span onClick={() => navigate(`/hashtag/${match}`)}>#{match}</span>
-                  ))};
-                </Content>
-                <Url></Url>
-              </RightContainer>
-            </Post>
+          {posts ? (
+            posts.map((post) => <PostBox key={post.id} post={post} />)
+          ) : (
+            <ContainerText>
+              <div>Não existem posts!</div>
+            </ContainerText>
           )}
 
         </PostsContainer>
@@ -93,7 +75,7 @@ const PostsContainer = styled.div`
   row-gap: 20px;
   margin-top: 20px;
 `
-
+/*
 const Post = styled.div`
   display: flex;
   box-sizing: content-box;
@@ -143,4 +125,4 @@ const Content = styled.p`
 
 const Url = styled.div`
 `
-
+*/

@@ -20,6 +20,7 @@ export default function TimelinePage() {
   const [content, setContent] = useState("");
   const [disable, setDisable] = useState(false);
 
+  /*
   useEffect(() => {
     validateUser(user, setUser);
 
@@ -34,6 +35,7 @@ export default function TimelinePage() {
         alert(erro);
       });
   }, [user]);
+  */
 
   function postUrlLink(e) {
     e.preventDefault();
