@@ -36,13 +36,14 @@ export default function Search({ onClick }) {
   return (
     <SearchContainer>
       <input
+        data-test="search"
         placeholder="Search for people"
         onChange={(event) => setName(event.target.value)}
       />
       <ResultSearchContaienr>
         {result.length > 0 ? (
           result.map((item) => (
-              <ItemUserSearch key={item.id} onClick={() => onClick(item.id)}>
+              <ItemUserSearch data-test="user-search" key={item.id} onClick={() => onClick(item.id)}>
                 <img src={item.pictureUrl} alt="usuario" />
                 {item.username}
               </ItemUserSearch>
@@ -84,6 +85,7 @@ display: flex;
 flex-direction: row;
 align-items: center;
 cursor: pointer;
+margin-bottom: 1px;
 
 img {
     width: 40px;
