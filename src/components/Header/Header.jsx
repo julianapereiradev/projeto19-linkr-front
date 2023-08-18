@@ -55,8 +55,6 @@ export default function Header() {
     navigate(pages.signIn)
   }
 
-  console.log('user em Header', user)
-
   return (
     <>
       <HeaderContainer className="header-box">
