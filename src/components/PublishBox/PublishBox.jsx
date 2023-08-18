@@ -10,13 +10,13 @@ export default function PublishBox({
   onPublish
 }) {
 
-
   return (
-    <Container>
+    <Container data-test="publish-box">
       <ContainerPhoto src={user.pictureUrl} alt="Foto do usuário" />
       <ContainerInputs>
         <Text>O que você vai compartilhar hoje?</Text>
         <InputUrl
+          data-test="link"
           type="text"
           placeholder="http://"
           value={url}
@@ -24,6 +24,7 @@ export default function PublishBox({
           disabled={disable}
         />
         <InputContent
+          data-test="description"
           type="text"
           placeholder="Artigo incrível sobre #javascript"
           value={content}
@@ -31,7 +32,7 @@ export default function PublishBox({
           disabled={disable}
         />
         <ButtonContainer>
-          <Button onClick={onPublish} disabled={disable}>
+          <Button data-test="publish-btn" onClick={onPublish} disabled={disable}>
             Publish
           </Button>
         </ButtonContainer>
