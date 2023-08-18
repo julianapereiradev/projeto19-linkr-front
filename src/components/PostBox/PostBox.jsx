@@ -21,7 +21,6 @@ export default function PostBox({ post }) {
         navigate(pages.userPosts + userId)
     };
   
-  function PostComponent({ post, isLiked, setIsLiked, user, openUrlId }) {
   function like(p) {
     if (!isLiked) {
       setIsLiked(true);
@@ -230,4 +229,4 @@ const ContainerLink = styled.div`
   flex-direction: row;
   justify-content: space-between;
   border-radius: 10px;
-`
+`;
