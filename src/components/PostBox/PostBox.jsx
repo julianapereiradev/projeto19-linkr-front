@@ -77,7 +77,8 @@ export default function PostBox({ post }) {
         <ContainerContent>
           <Username onClick={() => openUrlId(post.userId)}>{post.username}</Username>
           <Text>{post.content}</Text>
-            {urlMetadataInfo && (
+          {urlMetadataInfo && (
+            <a href={post.url} target="_blank" rel="noopener noreferrer">
               <ContainerLink>
                 <ContainerDetails>
                   <LinkTitle>{urlMetadataInfo.title}</LinkTitle>
@@ -85,20 +86,21 @@ export default function PostBox({ post }) {
                   <Link>{post.url}</Link>
                 </ContainerDetails>
                 <ContainerImage>
-                {urlMetadataInfo.images && urlMetadataInfo.images.length > 0 ? (
-                  <LinkImage src={urlMetadataInfo.images[0]} alt="metadata" />
-                ) : (
-                  <LinkImage src={NoImage} alt="metadata" />
-                )}
+                  {urlMetadataInfo.images && urlMetadataInfo.images.length > 0 ? (
+                    <LinkImage src={urlMetadataInfo.images[0]} alt="metadata" />
+                  ) : (
+                    <LinkImage src={NoImage} alt="metadata" />
+                  )}
                 </ContainerImage>
               </ContainerLink>
-            )}
+            </a>
+          )}
         </ContainerContent>
       </Container>
     </>
   );
 }
-const ContainerDetails=styled.div`
+const ContainerDetails = styled.div`
 width: 302px;
 `
 const LinkImage = styled.img`
@@ -106,13 +108,13 @@ const LinkImage = styled.img`
   height: 153px;
   border-radius: 0px 10px 10px 0px
 `
-const ContainerImage=styled.div`
+const ContainerImage = styled.div`
 width: 155px
 height: 155px
 border-radius: 0px 12px 13px 0px
 padding-left:10px;
 `
-const LinkDescription=styled.p`
+const LinkDescription = styled.p`
 font-family: Lato;
 font-size: 11px;
 font-weight: 400;
@@ -163,6 +165,9 @@ const ContainerContent = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 16px;
+  a {
+    text-decoration: none;
+  }
 `;
 const Container = styled.div`
   width: 611px;
