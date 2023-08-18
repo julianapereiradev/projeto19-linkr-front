@@ -12,15 +12,15 @@ import reactStringReplace from 'react-string-replace';
 
 
 export default function PostBox({ post }) {
-    const { user } = useContext(AuthContext);
-    const [isLiked, setIsLiked] = useState(false);
-    const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
-    const navigate = useNavigate();
-  
-    function openUrlId(userId) {
-        navigate(pages.userPosts + userId)
-    };
-  
+  const { user } = useContext(AuthContext);
+  const [isLiked, setIsLiked] = useState(false);
+  const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
+  const navigate = useNavigate();
+
+  function openUrlId(userId) {
+    navigate(pages.userPosts + userId)
+  };
+
   function like(p) {
     if (!isLiked) {
       setIsLiked(true);
@@ -86,17 +86,21 @@ export default function PostBox({ post }) {
               <span onClick={() => navigate(`/hashtag/${match}`)}>#{match}</span>
             ))}
           </Text>
-          
+
           {post.url && (
             <a href={post.url} target="_blank" rel="noopener noreferrer">
               <ContainerLink>
                 <ContainerDetails>
-                  <LinkTitle>{urlMetadataInfo.title}</LinkTitle>
-                  <LinkDescription>{urlMetadataInfo.description}</LinkDescription>
-                  <Link>{post.url}</Link>
+                  {urlMetadataInfo && (
+                    <>
+                      <LinkTitle>{urlMetadataInfo.title}</LinkTitle>
+                      <LinkDescription>{urlMetadataInfo.description}</LinkDescription>
+                      <Link>{post.url}</Link>
+                    </>
+                  )}
                 </ContainerDetails>
                 <ContainerImage>
-                  {urlMetadataInfo.images && urlMetadataInfo.images.length > 0 ? (
+                  {urlMetadataInfo && urlMetadataInfo.images && urlMetadataInfo.images.length > 0 ? (
                     <LinkImage src={urlMetadataInfo.images[0]} alt="metadata" />
                   ) : (
                     <LinkImage src={NoImage} alt="metadata" />
