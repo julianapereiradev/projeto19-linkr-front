@@ -6,6 +6,7 @@ import { backendroute, pages } from "../../routes/routes";
 import axios from "axios";
 import { headersAuth } from "../../constants/functions";
 import { useNavigate } from "react-router-dom";
+import Search from "../Search/Search";
 
 export default function Header() {
 
@@ -15,6 +16,7 @@ export default function Header() {
 
   const [showLogout, setShowLogout] = useState(false);
   const [arrowDirection, setArrowDirection] = useState("down");
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -55,12 +57,23 @@ export default function Header() {
     navigate(pages.signIn)
   }
 
-  console.log('user em Header', user)
+  // Função para lidar com o clique em um resultado de busca
+  const handleSearchClick = (userId) => {
+    navigate(pages.userPosts + userId)
+  };
+
+  function goToTimeline() {
+    navigate(pages.timeline)
+  };
+
 
   return (
     <>
       <HeaderContainer className="header-box">
-        <Title>linkr</Title>
+        <Title onClick={goToTimeline}>linkr</Title>
+       
+       <Search onClick={handleSearchClick} />
+         
         <RightContainer>
           <Arrow onClick={toggleLogout}>
             {arrowDirection === "down" ? (
@@ -87,7 +100,7 @@ export default function Header() {
 
 const HeaderContainer = styled.div`
   width: 100%;
-  height: 70px;
+  height: 72px;
   top: 0;
   left: 0;
   background-color: #151515;
@@ -114,6 +127,7 @@ const RightContainer = styled.div`
 
   img {
     height: 50px;
+    width: 50px;
     border-radius: 50%;
   }
 `;
@@ -126,6 +140,8 @@ const LogoutPosition = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  position: absolute;
+  right: 0;
 `;
 
 const LogoutSection = styled.div`

@@ -10,13 +10,13 @@ export default function PublishBox({
   onPublish
 }) {
 
-
   return (
-    <Container>
+    <Container data-test="publish-box">
       <ContainerPhoto src={user.pictureUrl} alt="Foto do usuário" />
       <ContainerInputs>
         <Text>O que você vai compartilhar hoje?</Text>
         <InputUrl
+          data-test="link"
           type="text"
           placeholder="http://"
           value={url}
@@ -24,19 +24,27 @@ export default function PublishBox({
           disabled={disable}
         />
         <InputContent
+          data-test="description"
           type="text"
           placeholder="Artigo incrível sobre #javascript"
           value={content}
           onChange={onContentChange}
           disabled={disable}
         />
-        <Button onClick={onPublish} disabled={disable}>
-          Publish
-        </Button>
+        <ButtonContainer>
+          <Button data-test="publish-btn" onClick={onPublish} disabled={disable}>
+            Publish
+          </Button>
+        </ButtonContainer>
       </ContainerInputs>
     </Container>
   );
 }
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
 
 const ContainerPhoto = styled.img`
     background-color:red;
@@ -57,6 +65,7 @@ const Container = styled.div`
     border-radius: 20px;
     display: flex;
     margin-bottom: 25px;
+    margin-top: 50px;
 `
 const InputUrl = styled.input`
     width: 503px;

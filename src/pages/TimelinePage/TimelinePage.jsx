@@ -12,7 +12,6 @@ import PublishBox from "../../components/PublishBox/PublishBox";
 
 export default function TimelinePage() {
   const { user, setUser } = useContext(AuthContext);
-  console.log("user em TimelinePage", user);
   const navigate = useNavigate();
 
   const [posts, setPosts] = useState(undefined);
@@ -34,6 +33,7 @@ export default function TimelinePage() {
         navigate(pages.signIn);
         alert(erro);
       });
+// eslint-disable-next-line
   }, [user]);
   */
 
@@ -52,12 +52,9 @@ export default function TimelinePage() {
       })
       .catch((error) => {
         alert(error.response.data);
-        console.log("erro aqui:", error);
         setDisable(false);
       });
   }
-
-  console.log("tudo que vem em posts do getPosts", posts);
 
   return (
     <>

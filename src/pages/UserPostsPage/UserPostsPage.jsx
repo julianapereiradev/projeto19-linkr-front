@@ -29,6 +29,7 @@ export default function UserPostsPage() {
         alert(error.response.data);
         navigate(pages.signIn);
       });
+// eslint-disable-next-line
   }, [user]);
 
 console.log("o que chega em userPosts", userPosts)
