@@ -62,7 +62,7 @@ export default function PostBox({ post }) {
 
   return (
     <>
-      <Container>
+      <Container data-test="post">
         <ContainerLike>
           <ContainerPhoto>
             <UserImage
