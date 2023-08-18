@@ -62,11 +62,15 @@ export default function Header() {
     navigate(pages.userPosts + userId)
   };
 
+  function goToTimeline() {
+    navigate(pages.timeline)
+  };
+
 
   return (
     <>
       <HeaderContainer className="header-box">
-        <Title>linkr</Title>
+        <Title onClick={goToTimeline}>linkr</Title>
        
        <Search onClick={handleSearchClick} />
          

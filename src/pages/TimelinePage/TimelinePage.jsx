@@ -32,6 +32,7 @@ export default function TimelinePage() {
         navigate(pages.signIn);
         alert(erro);
       });
+// eslint-disable-next-line
   }, [user]);
 
   function postUrlLink(e) {

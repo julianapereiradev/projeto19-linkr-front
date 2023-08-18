@@ -12,7 +12,7 @@ export default function UserPostBox({ post }) {
   const { user } = useContext(AuthContext);
 
   const [isLiked, setIsLiked] = useState(false);
-  const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
+  // const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
 
 
   function like(p) {

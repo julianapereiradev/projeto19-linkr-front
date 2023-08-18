@@ -117,18 +117,21 @@ export default function PostBox({ post }) {
 
 const ContainerDetails = styled.div`
 width: 302px;
-`
+`;
+
 const LinkImage = styled.img`
   width: 153px;
   height: 153px;
-  border-radius: 0px 10px 10px 0px
-`
+  border-radius: 0px 10px 10px 0px;
+`;
+
 const ContainerImage = styled.div`
-width: 155px
-height: 155px
-border-radius: 0px 12px 13px 0px
+width: 155px;
+height: 155px;
+border-radius: 0px 12px 13px 0px;
 padding-left:10px;
-`
+`;
+
 const LinkDescription = styled.p`
 font-family: Lato;
 font-size: 11px;
@@ -139,8 +142,8 @@ text-align: left;
 color: #9B9595;
 margin-top: 10px;
 margin-left: 15px;
+`;
 
-`
 const LinkTitle = styled.p`
 font-family: Lato;
 font-size: 16px;
@@ -151,7 +154,7 @@ text-align: left;
 color: #CECECE;
 margin-top: 20px;
 margin-left: 15px;
-`
+`;
 
 const UserImage = styled.img`
   width: 50px;
@@ -169,11 +172,11 @@ const ContainerPhoto = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const ContainerLike = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `;
 
 const ContainerContent = styled.div`
@@ -184,6 +187,7 @@ const ContainerContent = styled.div`
     text-decoration: none;
   }
 `;
+
 const Container = styled.div`
   width: 611px;
   height: 276px;
@@ -192,6 +196,7 @@ const Container = styled.div`
   display: flex;
   margin-bottom: 15px;
 `;
+
 const Text = styled.text`
   font-family: Lato;
   font-size: 17px;
@@ -206,6 +211,7 @@ const Text = styled.text`
     font-weight: 900;
   }
 `;
+
 const Username = styled.text`
   font-family: Lato;
   font-size: 19px;

@@ -5,7 +5,7 @@ import { headersAuth } from "../../constants/functions";
 import AuthContext from "../../contexts/AuthContext";
 
 export default function Search({ onClick }) {
-    const { user, setUser } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [result, setResult] = useState("");
 
@@ -29,9 +29,9 @@ export default function Search({ onClick }) {
     } else {
       setResult(""); // Reset the result if result is empty
     }
+// eslint-disable-next-line
   }, [name]);
 
-//   console.log('result em search', result)
 
   return (
     <SearchContainer>
@@ -43,7 +43,7 @@ export default function Search({ onClick }) {
         {result.length > 0 ? (
           result.map((item) => (
               <ItemUserSearch key={item.id} onClick={() => onClick(item.id)}>
-                <img src={item.pictureUrl} />
+                <img src={item.pictureUrl} alt="usuario" />
                 {item.username}
               </ItemUserSearch>
           ))
