@@ -6,6 +6,7 @@ import { backendroute, pages } from "../../routes/routes";
 import axios from "axios";
 import { headersAuth } from "../../constants/functions";
 import { useNavigate } from "react-router-dom";
+import Search from "../Search/Search";
 
 export default function Header() {
 
@@ -15,6 +16,7 @@ export default function Header() {
 
   const [showLogout, setShowLogout] = useState(false);
   const [arrowDirection, setArrowDirection] = useState("down");
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -55,10 +57,19 @@ export default function Header() {
     navigate(pages.signIn)
   }
 
+  // Função para lidar com o clique em um resultado de busca
+  const handleSearchClick = (userId) => {
+    navigate(pages.userPosts + userId)
+  };
+
+
   return (
     <>
       <HeaderContainer className="header-box">
         <Title>linkr</Title>
+       
+       <Search onClick={handleSearchClick} />
+         
         <RightContainer>
           <Arrow onClick={toggleLogout}>
             {arrowDirection === "down" ? (
