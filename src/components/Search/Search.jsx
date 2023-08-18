@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { headersAuth } from "../../constants/functions";
 import AuthContext from "../../contexts/AuthContext";
-
+import { backendroute } from "../../routes/routes";
 
 export default function Search({ onClick }) {
   const { user } = useContext(AuthContext);
@@ -14,10 +14,7 @@ export default function Search({ onClick }) {
     if (name.length >= 3) {
       const getData = setTimeout(() => {
         axios
-          .get(
-            `https://linkr-api-enf4.onrender.com/search/${name}`,
-            headersAuth(user.token)
-          )
+          .get(backendroute.getSearchByName + name, headersAuth(user.token))
           .then((response) => {
             setResult(response.data);
             console.log("response de searchByName", response);
@@ -26,7 +23,7 @@ export default function Search({ onClick }) {
             console.log("error de getSearchName aqui", error);
             setResult("");
           });
-      });
+    }, 300);
 
       return () => clearTimeout(getData);
     } else {
@@ -34,6 +31,8 @@ export default function Search({ onClick }) {
     }
     // eslint-disable-next-line
   }, [name]);
+
+  console.log('result em searchname', result)
 
   return (
     <SearchContainer>

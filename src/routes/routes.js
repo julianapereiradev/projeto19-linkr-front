@@ -21,5 +21,6 @@ export const backendroute = {
     getUserById: API_URL + '/timeline/user',
     getAllPostsByUserId: API_URL + '/user/',
     getTrendingHashtags: API_URL + '/trending',
-    getHashtagPosts: API_URL + '/hashtag/'
+    getHashtagPosts: API_URL + '/hashtag/',
+    getSearchByName: API_URL + '/search/'
 }
