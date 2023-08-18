@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { pages } from "./routes/routes";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
-import HashtagPage from "./pages/HashtagPage";
+import HashtagPage from "./pages/HashtagPage/HashtagPage";
 import TimelinePage from "./pages/TimelinePage/TimelinePage";
 import AuthContext from "./contexts/AuthContext";
 import { useState } from "react";
@@ -18,7 +18,7 @@ export default function App() {
    <Routes>
     <Route path={pages.signUp} element={<SignUpPage />} />
     <Route path={pages.signIn} element={<SignInPage />} />
-    <Route path={"/hashtag/:hashtag"} element={<HashtagPage />} />
+    <Route path={pages.hashtag} element={<HashtagPage />} />
     <Route path={pages.timeline} element={<TimelinePage />} />
     <Route path={pages.userPosts + ':id'} element={<UserPostsPage />} />
    </Routes>

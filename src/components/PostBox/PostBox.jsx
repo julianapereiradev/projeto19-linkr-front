@@ -8,18 +8,20 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import NoImage from "../../assets/noimage2.png";
+import reactStringReplace from 'react-string-replace';
+
 
 export default function PostBox({ post }) {
-  const { user } = useContext(AuthContext);
-  const [isLiked, setIsLiked] = useState(false);
-  const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
-
-  const navigate = useNavigate();
-
-  function openUrlId(userId) {
-    navigate(pages.userPosts + userId);
-  }
-
+    const { user } = useContext(AuthContext);
+    const [isLiked, setIsLiked] = useState(false);
+    const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
+    const navigate = useNavigate();
+  
+    function openUrlId(userId) {
+        navigate(pages.userPosts + userId)
+    };
+  
+  function PostComponent({ post, isLiked, setIsLiked, user, openUrlId }) {
   function like(p) {
     if (!isLiked) {
       setIsLiked(true);
@@ -31,7 +33,11 @@ export default function PostBox({ post }) {
       postId: p.id,
     };
 
-    const promise = axios.post(backendroute.likes, body, headersAuth(user.token));
+    const promise = axios.post(
+      backendroute.likes,
+      body,
+      headersAuth(user.token)
+    );
     promise.then((res) => {
       console.log(res.data);
     });
@@ -76,8 +82,13 @@ export default function PostBox({ post }) {
 
         <ContainerContent>
           <Username onClick={() => openUrlId(post.userId)}>{post.username}</Username>
-          <Text>{post.content}</Text>
-          {urlMetadataInfo && (
+          <Text>
+            {reactStringReplace(post.content, /(?<=[\s>]|^)#(\w*[A-Za-z_]+\w*)/g, (match, i) => (
+              <span onClick={() => navigate(`/hashtag/${match}`)}>#{match}</span>
+            ))}
+          </Text>
+          
+          {post.url && (
             <a href={post.url} target="_blank" rel="noopener noreferrer">
               <ContainerLink>
                 <ContainerDetails>
@@ -100,6 +111,7 @@ export default function PostBox({ post }) {
     </>
   );
 }
+
 const ContainerDetails = styled.div`
 width: 302px;
 `
@@ -187,6 +199,9 @@ const Text = styled.text`
   color: #b7b7b7;
   margin-top: 10px;
   margin-bottom: 16px;
+  span {
+    font-weight: 900;
+  }
 `;
 const Username = styled.text`
   font-family: Lato;

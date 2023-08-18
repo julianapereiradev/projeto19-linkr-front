@@ -2,6 +2,7 @@ export const pages = {
     signUp: '/sign-up',
     signIn: '/',
     timeline: '/timeline',
+    hashtag: '/hashtag/:id',
     userPosts: '/user/'
 }
 
@@ -18,5 +19,7 @@ export const backendroute = {
     getAllPosts: API_URL + '/timeline',
     likes: API_URL + '/like',
     getUserById: API_URL + '/timeline/user',
-    getAllPostsByUserId: API_URL + '/user/'
+    getAllPostsByUserId: API_URL + '/user/',
+    getTrendingHashtags: API_URL + '/trending',
+    getHashtagPosts: API_URL + '/hashtag/'
 }

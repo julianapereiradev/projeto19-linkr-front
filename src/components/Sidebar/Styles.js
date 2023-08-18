@@ -9,7 +9,7 @@ export const SideBarContainer = styled.aside`
   padding: 15px;
   width: 20%;
   height: 400px;
-  margin-top: 77px;
+  margin-top: 82px;
   line-height: 32px;
 `;
 
