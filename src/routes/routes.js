@@ -23,9 +23,8 @@ export const backendroute = {
     getAllPostsByUserId: API_URL + '/user/',
     getTrendingHashtags: API_URL + '/trending',
     getHashtagPosts: API_URL + '/hashtag/',
-
-    getDataUserByToken: API_URL + '/sessions'    
-     getSearchByName: API_URL + '/search/',
+    getDataUserByToken: API_URL + '/sessions',
+    getSearchByName: API_URL + '/search/',
     deletePostById: API_URL + '/posts/'
 
 }

@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from 'react-tooltip';
 import reactStringReplace from 'react-string-replace';
 import NoImage from "../../assets/noimage2.png";
-import reactStringReplace from "react-string-replace";
 import { TbTrashFilled } from "react-icons/tb";
 import Modal from "react-modal";
 import { ThreeDots } from "react-loader-spinner";
@@ -19,11 +18,9 @@ import { ThreeDots } from "react-loader-spinner";
 export default function PostBox({ post }) {
   const { user } = useContext(AuthContext);
 
-
     const [selected, setSelected] = useState(false);
     const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
     const [postLikes, setPostLikes] = useState();
-    const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -34,12 +31,28 @@ export default function PostBox({ post }) {
     navigate(pages.userPosts + userId);
   }
 
+  const fetchUrlMetadata = async (url) => {
+    try {
+      const response = await axios.get(
+        `https://jsonlink.io/api/extract?url=${url}`
+      );
+      setUrlMetadataInfo(response.data);
+    } catch (error) {
+      console.error("Error fetching URL metadata:", error);
+    }
+  };
+
+
     useEffect(() => {
         const promiseLikes = axios.get(backendroute.getlikes + post.id, headersAuth(user.token))
         promiseLikes.then((res) => {
             setPostLikes(res.data)
         })
-    }, [selected, post.id])
+
+        if (post.url) {
+            fetchUrlMetadata(post.url);
+          }
+    }, [selected, post.id, post.url, user])
 
     if (!postLikes) {
         return <Load><ThreeDots color="#FFFFFF" height={50} width={50} /></Load>
@@ -71,6 +84,8 @@ export default function PostBox({ post }) {
         promiseUser.catch((err) => {
             alert(err.response.data);
         });
+    }
+
   const openDeleteModal = () => {
     setShowDeleteModal(true);
   };
@@ -95,22 +110,7 @@ export default function PostBox({ post }) {
     removeItem(postId);
   };
 
-  const fetchUrlMetadata = async (url) => {
-    try {
-      const response = await axios.get(
-        `https://jsonlink.io/api/extract?url=${url}`
-      );
-      setUrlMetadataInfo(response.data);
-    } catch (error) {
-      console.error("Error fetching URL metadata:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (post.url) {
-      fetchUrlMetadata(post.url);
-    }
-  }, [post.url]);
+ 
 
   return (
     <>
@@ -435,7 +435,7 @@ const SCQntLikes = styled.p`
     font-weight: 400;
     font-size: 11;
     color: black;
-`
+`;
 
 const SCTooltip = styled(Tooltip)`
     box-shadow: 0px 4px 4px 0px #000;
@@ -446,7 +446,7 @@ const SCTooltip = styled(Tooltip)`
 
     display: flex;
     align-items: center;
-`
+`;
 
 const SCTooltipText = styled.p`
      font-family: "Lato";
@@ -454,4 +454,4 @@ const SCTooltipText = styled.p`
     font-size: 11;
     color: black;
     text-align: center;
-`
+`;
