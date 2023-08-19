@@ -12,13 +12,13 @@ import PublishBox from "../../components/PublishBox/PublishBox";
 
 export default function TimelinePage() {
   const { user, setUser } = useContext(AuthContext);
-  console.log("user em TimelinePage", user);
   const navigate = useNavigate();
 
   const [posts, setPosts] = useState(undefined);
   const [url, setUrl] = useState("");
   const [content, setContent] = useState("");
   const [disable, setDisable] = useState(false);
+  const [publishing, setPublishing] = useState(false);
 
   useEffect(() => {
     validateUser(user, setUser);
@@ -33,11 +33,13 @@ export default function TimelinePage() {
         navigate(pages.signIn);
         alert(erro);
       });
+// eslint-disable-next-line
   }, [user]);
 
   function postUrlLink(e) {
     e.preventDefault();
     setDisable(true);
+    setPublishing(true);
 
     const informations = { url: url, content: content };
 
@@ -45,31 +47,31 @@ export default function TimelinePage() {
       .post(backendroute.postLink, informations, headersAuth(user.token))
       .then((resp) => {
         console.log(resp.data);
-        window.location.reload();
+        setUrl("");
+        setContent("");
+        setPublishing(false);
         setDisable(false);
+        window.location.reload();
       })
       .catch((error) => {
         alert(error.response.data);
-        console.log("erro aqui:", error);
+        setPublishing(false);
         setDisable(false);
       });
   }
 
-  console.log("tudo que vem em posts do getPosts", posts);
-
   return (
     <>
       <Header />
-
       <ContainerTimeline>
         <ContainerPost>
           <ColorText>timeline</ColorText>
-
           <PublishBox
             user={user}
             url={url}
             content={content}
             disable={disable}
+            publishing={publishing} 
             onUrlChange={(e) => setUrl(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             onPublish={postUrlLink}
