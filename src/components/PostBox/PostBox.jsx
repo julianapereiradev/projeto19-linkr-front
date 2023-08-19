@@ -7,26 +7,70 @@ import { headersAuth } from "../../constants/functions";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { Tooltip } from 'react-tooltip';
+import reactStringReplace from 'react-string-replace';
 import NoImage from "../../assets/noimage2.png";
 import reactStringReplace from "react-string-replace";
 import { TbTrashFilled } from "react-icons/tb";
 import Modal from "react-modal";
 import { ThreeDots } from "react-loader-spinner";
 
+
 export default function PostBox({ post }) {
   const { user } = useContext(AuthContext);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate();
+    const [selected, setSelected] = useState(false);
+    const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
+    const [postLikes, setPostLikes] = useState();
+    const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    const navigate = useNavigate();
 
   function openUrlId(userId) {
     navigate(pages.userPosts + userId);
   }
 
+    useEffect(() => {
+        const promiseLikes = axios.get(backendroute.getlikes + post.id, headersAuth(user.token))
+        promiseLikes.then((res) => {
+            setPostLikes(res.data)
+        })
+    }, [selected, post.id])
+
+    if (!postLikes) {
+        return <Load><ThreeDots color="#FFFFFF" height={50} width={50} /></Load>
+    }
+
+    function like() {
+
+        const promiseUser = axios.get(
+            backendroute.getDataUserByToken,
+            headersAuth(user.token)
+        );
+        promiseUser.then((res) => {
+            const body = {
+                userId: res.data[0].userId,
+                postId: post.id,
+            };
+            const promise = axios.post(
+                backendroute.likes,
+                body,
+                headersAuth(user.token)
+            );
+            promise.then((res) => {
+                setSelected(!selected);
+            });
+            promise.catch((err) => {
+                alert(err.response.data);
+            });
+        });
+        promiseUser.catch((err) => {
+            alert(err.response.data);
+        });
   const openDeleteModal = () => {
     setShowDeleteModal(true);
   };
@@ -50,30 +94,6 @@ export default function PostBox({ post }) {
   const trashIconClicked = (postId) => {
     removeItem(postId);
   };
-
-  function like(p) {
-    if (!isLiked) {
-      setIsLiked(true);
-    } else {
-      setIsLiked(false);
-    }
-    const body = {
-      userId: p.userId,
-      postId: p.id,
-    };
-
-    const promise = axios.post(
-      backendroute.likes,
-      body,
-      headersAuth(user.token)
-    );
-    promise.then((res) => {
-      console.log(res.data);
-    });
-    promise.catch((err) => {
-      alert(err.response.data);
-    });
-  }
 
   const fetchUrlMetadata = async (url) => {
     try {
@@ -103,12 +123,21 @@ export default function PostBox({ post }) {
               alt="Usuário"
             />
           </ContainerPhoto>
-
-          {isLiked ? (
-            <FiHeart size="27" color="#FFF" onClick={() => like(post)} />
-          ) : (
-            <FaHeart size="27" color="#AC0000" onClick={() => like(post)} />
-          )}
+           <Icon>
+                        <LikeTooltip >
+                            {postLikes[0].isLiked ? (
+                                <FaHeart color="#AC0000" size={20} onClick={() => like()} />
+                            ) : (
+                                <FiHeart color="#fff" size={20} onClick={() => like()} />
+                            )}
+                            <a data-tooltip-id={String(post.id)} data-tooltip-place="bottom">
+                                <SCQntLikes>{postLikes[0].count} likes</SCQntLikes>
+                            </a>
+                            <SCTooltip id={String(post.id)} style={{ backgroundColor: "#fff" }}>
+                                <SCTooltipText>{postLikes[0].whoLiked}</SCTooltipText>
+                            </SCTooltip>
+                        </LikeTooltip>
+                    </Icon>
         </ContainerLike>
 
         <ContainerContent>
@@ -283,6 +312,11 @@ const ContainerLike = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+const Icon = styled.div`
+    &:hover {
+        cursor: pointer;
+    }
+`;
 
 const ContainerTrashRow = styled.div`
   display: flex;
@@ -383,3 +417,41 @@ width: 25px;
 height: 25px;
 background-color: #151515;
 `;
+
+const LikeTooltip = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+`;
+const Load = styled.div`
+    align-self: center;
+    display: flex;
+`;
+
+const SCQntLikes = styled.p`
+    margin-top: 10px;
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 11;
+    color: black;
+`
+
+const SCTooltip = styled(Tooltip)`
+    box-shadow: 0px 4px 4px 0px #000;
+    width: 160px;
+    height: 24px;
+    opacity: 0.9;
+    background-color: #fff;
+
+    display: flex;
+    align-items: center;
+`
+
+const SCTooltipText = styled.p`
+     font-family: "Lato";
+    font-weight: 700;
+    font-size: 11;
+    color: black;
+    text-align: center;
+`

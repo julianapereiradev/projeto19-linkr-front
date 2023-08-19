@@ -18,10 +18,14 @@ export const backendroute = {
     postLink: API_URL + '/timeline',
     getAllPosts: API_URL + '/timeline',
     likes: API_URL + '/like',
+    getlikes: API_URL + '/like/',
     getUserById: API_URL + '/timeline/user',
     getAllPostsByUserId: API_URL + '/user/',
     getTrendingHashtags: API_URL + '/trending',
     getHashtagPosts: API_URL + '/hashtag/',
-    getSearchByName: API_URL + '/search/',
+
+    getDataUserByToken: API_URL + '/sessions'    
+     getSearchByName: API_URL + '/search/',
     deletePostById: API_URL + '/posts/'
+
 }
