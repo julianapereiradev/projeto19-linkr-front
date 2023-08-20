@@ -76,7 +76,8 @@ export default function PostBox({ post }) {
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Erro ao atualizar o post:", error);
+        console.error(error.message);
+        alert(error.response.data);
       });
   };
 
