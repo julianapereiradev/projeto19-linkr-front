@@ -14,10 +14,10 @@ export default function Sidebar() {
 
   useEffect(() => {
     axios.get(backendroute.getTrendingHashtags, headersAuth(user.token))
-      .then(res => {
+      .then((res) => {
         setHashtags(res.data);
       })
-      .catch(res => {
+      .catch((res) => {
         console.log("Failed to load trending hashtags");
       });
   }, []);
@@ -26,11 +26,13 @@ export default function Sidebar() {
     <SideBarContainer>
       <Title> trending </Title>
       <Line />
+      
       {hashtags.map((hashtag, index) =>
-        <Hashtag key={index} onClick={() => navigate(`/hashtag/${hashtag}`)}>
-          # {hashtag}
+        <Hashtag key={index} onClick={() => navigate(`/hashtag/${hashtag.hashtag}`)}>
+          # {hashtag.hashtag}
         </Hashtag>
       )}
+    
     </SideBarContainer>
   );
 }

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { backendroute } from "../../routes/routes";
 import PostBox from "../../components/PostBox/PostBox";
 import { headersAuth, validateUser } from "../../constants/functions";
@@ -14,17 +14,16 @@ export default function HashtagPage() {
   const [posts, setPosts] = useState(undefined);
 
   const params = useParams();
-  const hashtag = params.hashtag;
+  const hashtag = params.id;
 
-  const navigate = useNavigate();
-  
+  headersAuth(user.token)
 
   useEffect(() => {
     axios.get(backendroute.getHashtagPosts + hashtag, headersAuth(user.token))
-      .then(res => {
+      .then((res) => {
         setPosts(res.data);
       })
-      .catch(res => {
+      .catch((res) => {
         console.log("Failed to get posts containing the hashtag", res.data.message);
       });
   }, []);
