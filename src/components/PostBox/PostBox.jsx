@@ -65,29 +65,28 @@ export default function PostBox({ post }) {
     }
   };
 
-  const handleSaveEdit = async (postId) => {
+  const handleSaveEdit = async () => {
     axios
-      .put(backendroute.updatePostById + postId, { content: editedContent }, headersAuth(user.token))
+      .put(backendroute.updatePostById + post.id, { content: editedContent }, headersAuth(user.token))
       .then((response) => {
         setIsEditing(false);
         setChangesMade(false);
         setEditedContent(response.data.content);
+        console.log("Post atualizado com sucesso:", response.data);
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Erro ao atualizar o post:", error);
       });
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); 
-      handleSaveEdit(); 
-    }
-  };
-
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
       handleCancelEdit();
+    }
+    if (e.key === "Enter") {
+      e.preventDefault(); 
+      handleSaveEdit(); 
     }
   };
 
@@ -265,7 +264,6 @@ export default function PostBox({ post }) {
                   setChangesMade(true);
                 }}
                 onBlur={handleCancelEdit}
-                onKeyPress={handleKeyPress}
                 onKeyDown={handleKeyDown}
                 disabled={isLoading}
               />
