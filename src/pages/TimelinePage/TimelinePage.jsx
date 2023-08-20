@@ -30,11 +30,9 @@ export default function TimelinePage() {
         setPosts(res.data);
       })
       .catch((erro) => {
-        console.log("erro de getAllPosts", erro);
         navigate(pages.signIn);
         alert(erro);
       });
-// eslint-disable-next-line
   }, [user]);
   
 
@@ -44,11 +42,16 @@ export default function TimelinePage() {
     setPublishing(true);
 
     const informations = { url: url, content: content };
+    if(!url){
+      alert("É necessário informar uma url");
+      setPublishing(false);
+      setDisable(false);
+      return;
+    }
 
     axios
       .post(backendroute.postLink, informations, headersAuth(user.token))
       .then((resp) => {
-        console.log(resp.data);
         setUrl("");
         setContent("");
         setPublishing(false);
@@ -61,7 +64,6 @@ export default function TimelinePage() {
         setDisable(false);
       });
   }
-
   return (
     <>
       <Header />
@@ -83,7 +85,7 @@ export default function TimelinePage() {
             posts.map((post) => <PostBox key={post.id} post={post} />)
           ) : (
             <ContainerText>
-              <div>Não existem posts!</div>
+              <div data-test="message">Não existem posts!</div>
             </ContainerText>
           )}
         </ContainerPost>

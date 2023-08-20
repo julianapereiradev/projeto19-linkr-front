@@ -32,8 +32,6 @@ export default function Search({ onClick }) {
     // eslint-disable-next-line
   }, [name]);
 
-  console.log('result em searchname', result)
-
   return (
     <SearchContainer>
       <input
