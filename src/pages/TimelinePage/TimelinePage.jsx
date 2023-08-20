@@ -20,6 +20,7 @@ export default function TimelinePage() {
   const [disable, setDisable] = useState(false);
   const [publishing, setPublishing] = useState(false);
 
+  
   useEffect(() => {
     validateUser(user, setUser);
 
@@ -35,6 +36,7 @@ export default function TimelinePage() {
       });
 // eslint-disable-next-line
   }, [user]);
+  
 
   function postUrlLink(e) {
     e.preventDefault();
