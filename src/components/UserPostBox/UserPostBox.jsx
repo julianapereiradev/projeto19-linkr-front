@@ -277,7 +277,7 @@ const SCQntLikes = styled.p`
     font-family: "Lato";
     font-weight: 400;
     font-size: 11;
-    color: black;
+    color: #ffffff;
 `;
 
 const SCTooltip = styled(Tooltip)`
