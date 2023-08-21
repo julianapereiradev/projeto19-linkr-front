@@ -16,7 +16,7 @@ export default function UserPostBox({ post }) {
   const [isLiked, setIsLiked] = useState(false);
   // const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
 
   function like(p) {

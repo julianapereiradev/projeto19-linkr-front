@@ -5,7 +5,7 @@ export const PageContainer = styled.main`
   justify-content: center;
   gap: 20px;
   min-height: 100vh;
-  width: 100%;
+  width: 100vw;
   background-color: #333333;
 `;
 
@@ -19,9 +19,9 @@ export const Title = styled.h1`
 export const PostsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 50%;
   row-gap: 20px;
-  margin-top: 20px;
+  margin-top: 50px;
 `;
 
 export const ContainerText = styled.div`

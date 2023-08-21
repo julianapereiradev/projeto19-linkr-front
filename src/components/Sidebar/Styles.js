@@ -11,6 +11,9 @@ export const SideBarContainer = styled.aside`
   height: 400px;
   margin-top: 82px;
   line-height: 32px;
+  @media(max-width: 600px) {
+    display: none;
+  }
 `;
 
 export const Title = styled.p`
@@ -27,6 +30,8 @@ export const Line = styled.div`
   margin-bottom: 5px;
   margin-top: 5px;
 `;
+
+export const HashtagsContainer = styled.ul``
 
 export const Hashtag = styled.p`
   font-family: 'Lato', sans-serif;

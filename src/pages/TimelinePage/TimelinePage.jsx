@@ -9,6 +9,7 @@ import PostBox from "../../components/PostBox/PostBox";
 import { ColorText, ContainerTimeline, ContainerPost } from "./Styles";
 import Header from "../../components/Header/Header";
 import PublishBox from "../../components/PublishBox/PublishBox";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 export default function TimelinePage() {
   const { user, setUser } = useContext(AuthContext);
@@ -67,32 +68,41 @@ export default function TimelinePage() {
   return (
     <>
       <Header />
-      <ContainerTimeline>
-        <ContainerPost>
-          <ColorText>timeline</ColorText>
-          <PublishBox
-            user={user}
-            url={url}
-            content={content}
-            disable={disable}
-            publishing={publishing} 
-            onUrlChange={(e) => setUrl(e.target.value)}
-            onContentChange={(e) => setContent(e.target.value)}
-            onPublish={postUrlLink}
-          />
+      <PageContainer>
+        <ContainerTimeline>
+          <ContainerPost>
+            <ColorText>timeline</ColorText>
+            <PublishBox
+              user={user}
+              url={url}
+              content={content}
+              disable={disable}
+              publishing={publishing} 
+              onUrlChange={(e) => setUrl(e.target.value)}
+              onContentChange={(e) => setContent(e.target.value)}
+              onPublish={postUrlLink}
+            />
 
-          {posts ? (
-            posts.map((post) => <PostBox key={post.id} post={post} />)
-          ) : (
-            <ContainerText>
-              <div data-test="message">Não existem posts!</div>
-            </ContainerText>
-          )}
-        </ContainerPost>
-      </ContainerTimeline>
+            {posts ? (
+              posts.map((post) => <PostBox key={post.id} post={post} />)
+            ) : (
+              <ContainerText>
+                <div data-test="message">Não existem posts!</div>
+              </ContainerText>
+            )}
+          </ContainerPost>
+        </ContainerTimeline>
+        <Sidebar />
+      </PageContainer>
     </>
   );
 }
+
+const PageContainer = styled.main`
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+`
 
 const ContainerText = styled.div`
   display: flex;

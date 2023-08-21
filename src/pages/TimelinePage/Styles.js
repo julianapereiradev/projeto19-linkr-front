@@ -15,6 +15,7 @@ export const ContainerTimeline = styled.div`
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    margin-top: -50px;
 `;
 export const ContainerPost = styled.div`
     width: 611px;

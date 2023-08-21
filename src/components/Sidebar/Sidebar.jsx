@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import { SideBarContainer, Title, Line, Hashtag } from "./Styles";
-import { Navigate, useNavigate } from "react-router-dom";
+import { SideBarContainer, Title, Line, HashtagsContainer, Hashtag } from "./Styles";
+import { useNavigate } from "react-router-dom";
 import { backendroute } from "../../routes/routes";
 import AuthContext from "../../contexts/AuthContext";
 import { headersAuth, validateUser } from "../../constants/functions";
@@ -13,25 +13,28 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    validateUser(user, setUser);
+
     axios.get(backendroute.getTrendingHashtags, headersAuth(user.token))
       .then((res) => {
         setHashtags(res.data);
       })
       .catch((res) => {
-        console.log("Failed to load trending hashtags");
+        console.log(res.data.message);
       });
-  }, []);
+  }, [user]);
 
   return (
     <SideBarContainer>
       <Title> trending </Title>
       <Line />
-      
-      {hashtags.map((hashtag, index) =>
-        <Hashtag key={index} onClick={() => navigate(`/hashtag/${hashtag.hashtag}`)}>
-          # {hashtag.hashtag}
-        </Hashtag>
-      )}
+      <HashtagsContainer data-test="trending">
+        {hashtags.map((hashtag, index) =>
+          <Hashtag key={index} onClick={() => navigate(`/hashtag/${hashtag.hashtag}`)}>
+            <li># {hashtag.hashtag}</li>
+          </Hashtag>
+        )}
+      </HashtagsContainer>
     
     </SideBarContainer>
   );

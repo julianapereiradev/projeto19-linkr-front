@@ -19,14 +19,16 @@ export default function HashtagPage() {
   headersAuth(user.token)
 
   useEffect(() => {
+    validateUser(user, setUser);
+
     axios.get(backendroute.getHashtagPosts + hashtag, headersAuth(user.token))
       .then((res) => {
         setPosts(res.data);
       })
       .catch((res) => {
-        console.log("Failed to get posts containing the hashtag", res.data.message);
+        console.log(res.data.message);
       });
-  }, []);
+  }, [user]);
 
 
   return (
