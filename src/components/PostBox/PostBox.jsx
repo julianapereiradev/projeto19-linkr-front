@@ -47,11 +47,13 @@ export default function PostBox({ post }) {
 
   const startEditing = () => {
     setIsEditing(true);
-    if (textInputRef.current) {
-      textInputRef.current.focus();
-    }
+    setTimeout(() => {
+      if (textInputRef.current) {
+        textInputRef.current.focus();
+      }
+    }, 0); // Defina um pequeno atraso, como 0ms, para aplicar o foco após a atualização do estado.
   };
-
+  
   const handleCancelEdit = () => {
     if (changesMade) {
       const confirmDiscard = window.confirm("Descartar alterações não salvas?");
@@ -168,9 +170,6 @@ export default function PostBox({ post }) {
     removeItem(postId);
   };
 
-  console.log("post.url aqui:", post.url);
-  console.log("urlMetaDataInfo", urlMetadataInfo);
-
   return (
     <>
       <Container data-test="post">
@@ -225,15 +224,21 @@ export default function PostBox({ post }) {
               {post.username}
             </Username>
             <PenTrashContainer>
-              <PenContainer
+            {post.userId === user.lastuserId && (
+                <PenContainer
                 data-test="edit-btn"
                 src={Pen}
                 alt="pen"
                 onClick={isEditing ? handleCancelEdit : startEditing}
               />
-              <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}>
-                <TbTrashFilled color="#FFFFFF" size="25" />
-              </ButtonTrash>
+              )}
+              
+              {post.userId === user.lastuserId && (
+                <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}>
+                  <TbTrashFilled color="#FFFFFF" size="25" />
+                </ButtonTrash>
+              )}
+
             </PenTrashContainer>
           </ContainerTrashRow>
 
@@ -321,7 +326,12 @@ export default function PostBox({ post }) {
             )}
           </Text>
           {post.url && urlMetadataInfo && (
-            <a href={post.url} target="_blank" rel="noopener noreferrer" data-test="link">
+            <a
+              href={post.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-test="link"
+            >
               <ContainerLink>
                 <ContainerDetails>
                   {urlMetadataInfo && (
