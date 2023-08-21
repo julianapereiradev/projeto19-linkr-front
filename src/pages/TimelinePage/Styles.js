@@ -8,6 +8,10 @@ export const ColorText = styled.h1`
     line-height: 64px;
     letter-spacing: 0em;
     text-align: left;
+    @media (max-width: 600px) {
+        margin-left: 20px;
+        margin-top: 30px;
+    }
 `;
 export const ContainerTimeline = styled.div`
     height: 100vh;

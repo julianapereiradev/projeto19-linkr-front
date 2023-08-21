@@ -29,7 +29,8 @@ export default function SignInPage() {
         const newUser = {
           token: res.data.token,
           pictureUrl: res.data.pictureUrl,
-          username: res.data.username
+          username: res.data.username,
+          lastuserId: res.data.lastuserId
         }
         setUser(newUser);
         localStorage.setItem("user", JSON.stringify(newUser))

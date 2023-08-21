@@ -45,6 +45,9 @@ export default function PublishBox({
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  @media (max-width: 600px) {
+    margin-right: 10%;
+  }
 `
 
 const ContainerPhoto = styled.img`
@@ -53,11 +56,18 @@ const ContainerPhoto = styled.img`
     height: 50px;
     border-radius: 27px;
     margin: 16px;
+    @media (max-width: 600px) {
+      display: none;
+    }
 `
 const ContainerInputs = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 16px;
+    @media (max-width: 600px) {
+      width: 90%;
+      margin-left: 30px;
+    }
 `
 const Container = styled.div`
     width: 611px;
@@ -67,8 +77,9 @@ const Container = styled.div`
     display: flex;
     margin-bottom: 25px;
     margin-top: 50px;
-    @media(max-width: 625px) {
-      width: 100%;
+    @media (max-width: 600px) {
+      width: 100%; 
+      border-radius: 0px;
     }
 `
 const InputUrl = styled.input`
@@ -85,6 +96,9 @@ const InputUrl = styled.input`
     line-height: 18px;
     letter-spacing: 0em;
     text-align: left;
+    @media (max-width: 600px) {
+      margin-right: 0px;
+    }
 `;
 const InputContent = styled.input`
     width: 503px;
