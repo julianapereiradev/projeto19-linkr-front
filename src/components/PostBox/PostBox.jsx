@@ -386,7 +386,7 @@ const ContainerImage = styled.div`
   width: 155px;
   height: 155px;
   border-radius: 0px 12px 13px 0px;
-  padding-left: 10px;
+  padding-left: 5px;
 `;
 
 const LinkDescription = styled.p`
@@ -399,6 +399,9 @@ const LinkDescription = styled.p`
   color: #9b9595;
   margin-top: 10px;
   margin-left: 15px;
+  @media(max-width: 600px) {
+    font-size: 8px;
+  }
 `;
 
 const LinkTitle = styled.p`
@@ -411,6 +414,9 @@ const LinkTitle = styled.p`
   color: #cecece;
   margin-top: 20px;
   margin-left: 15px;
+  @media(max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 const UserImage = styled.img`
@@ -501,6 +507,10 @@ const Link = styled.div`
   font-family: Lato;
   font-size: 11px;
   font-weight: 400;
+  @media(max-width: 600px) {
+    font-size: 7px;
+  }
+
 `;
 
 const ContainerLink = styled.div`
@@ -511,6 +521,9 @@ const ContainerLink = styled.div`
   flex-direction: row;
   justify-content: space-between;
   border-radius: 10px;
+  @media(max-width: 600px) {
+    width: 90%
+  }
 `;
 
 const DivInsideModal = styled.div`
