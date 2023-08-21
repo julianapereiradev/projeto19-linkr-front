@@ -150,6 +150,9 @@ const ContainerLink = styled.div`
   flex-direction: row;
   justify-content: space-between;
   border-radius: 10px;
+  @media(max-width: 600px) {
+    width: 100%
+  }
 `;
 const ContainerDetails = styled.div`
   width: 302px;
