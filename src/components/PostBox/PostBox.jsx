@@ -65,29 +65,29 @@ export default function PostBox({ post }) {
     }
   };
 
-  const handleSaveEdit = async (postId) => {
+  const handleSaveEdit = async () => {
     axios
-      .put(backendroute.updatePostById + postId, { content: editedContent }, headersAuth(user.token))
+      .put(backendroute.updatePostById + post.id, { content: editedContent }, headersAuth(user.token))
       .then((response) => {
         setIsEditing(false);
         setChangesMade(false);
         setEditedContent(response.data.content);
+        console.log("Post atualizado com sucesso:", response.data);
+        window.location.reload();
       })
       .catch((error) => {
-        console.error("Erro ao atualizar o post:", error);
+        console.error(error.message);
+        alert(error.response.data);
       });
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); 
-      handleSaveEdit(); 
-    }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Escape") {
       handleCancelEdit();
+    }
+    if (e.key === "Enter") {
+      e.preventDefault(); 
+      handleSaveEdit(); 
     }
   };
 
@@ -190,11 +190,11 @@ export default function PostBox({ post }) {
 
         <ContainerContent>
           <ContainerTrashRow>
-            <Username onClick={() => openUrlId(post.userId)}>
+            <Username data-test="username" onClick={() => openUrlId(post.userId)}>
               {post.username}
             </Username>
             <PenTrashContainer>
-              <PenContainer src={Pen} alt="pen" onClick={isEditing ? handleCancelEdit : startEditing}/>
+              <PenContainer data-teste="edit-btn" src={Pen} alt="pen" onClick={isEditing ? handleCancelEdit : startEditing}/>
               <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}><TbTrashFilled
                 color="#FFFFFF"
                 size="25"
@@ -255,9 +255,10 @@ export default function PostBox({ post }) {
 
           </Modal>
 
-          <Text>
+          <Text data-test="description">
             {isEditing ? (
               <textarea
+                data-test="edit-input"
                 ref={textInputRef}
                 value={editedContent}
                 onChange={(e) => {
@@ -265,7 +266,6 @@ export default function PostBox({ post }) {
                   setChangesMade(true);
                 }}
                 onBlur={handleCancelEdit}
-                onKeyPress={handleKeyPress}
                 onKeyDown={handleKeyDown}
                 disabled={isLoading}
               />
@@ -284,7 +284,7 @@ export default function PostBox({ post }) {
 
           {post.url && (
             <a href={post.url} target="_blank" rel="noopener noreferrer">
-              <ContainerLink>
+              <ContainerLink data-teste="link">
                 <ContainerDetails>
                   {urlMetadataInfo && (
                     <>
