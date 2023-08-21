@@ -34,13 +34,13 @@ export default function HashtagPage() {
       <Header />
       <PageContainer>
         <PostsContainer>
-          <Title># {hashtag}</Title>
+          <Title data-test="hashtag-title"># {hashtag}</Title>
 
           {posts ? (
             posts.map((post) => <PostBox key={post.id} post={post} />)
           ) : (
             <ContainerText>
-              <div>Não existem posts!</div>
+              <div>There are no posts about this hashtag yet!</div>
             </ContainerText>
           )}
 

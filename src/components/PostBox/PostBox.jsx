@@ -174,15 +174,15 @@ export default function PostBox({ post }) {
           <Icon>
             <LikeTooltip >
               {postLikes[0].isLiked ? (
-                <FaHeart color="#AC0000" size={20} onClick={() => like()} />
+                <FaHeart data-test="like-btn" color="#AC0000" size={20} onClick={() => like()} />
               ) : (
-                <FiHeart color="#fff" size={20} onClick={() => like()} />
+                <FiHeart data-test="like-btn" color="#fff" size={20} onClick={() => like()} />
               )}
               <a data-tooltip-id={String(post.id)} data-tooltip-place="bottom">
-                <SCQntLikes>{postLikes[0].count} likes</SCQntLikes>
+                <SCQntLikes data-test="counter">{postLikes[0].count} likes</SCQntLikes>
               </a>
               <SCTooltip id={String(post.id)} style={{ backgroundColor: "#fff" }}>
-                <SCTooltipText>{postLikes[0].whoLiked}</SCTooltipText>
+                <SCTooltipText data-test="tooltip">{postLikes[0].whoLiked}</SCTooltipText>
               </SCTooltip>
             </LikeTooltip>
           </Icon>
@@ -194,7 +194,7 @@ export default function PostBox({ post }) {
               {post.username}
             </Username>
             <PenTrashContainer>
-              <PenContainer data-teste="edit-btn" src={Pen} alt="pen" onClick={isEditing ? handleCancelEdit : startEditing}/>
+              <PenContainer data-test="edit-btn" src={Pen} alt="pen" onClick={isEditing ? handleCancelEdit : startEditing}/>
               <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}><TbTrashFilled
                 color="#FFFFFF"
                 size="25"
@@ -284,7 +284,7 @@ export default function PostBox({ post }) {
 
           {post.url && (
             <a href={post.url} target="_blank" rel="noopener noreferrer">
-              <ContainerLink data-teste="link">
+              <ContainerLink data-test="link">
                 <ContainerDetails>
                   {urlMetadataInfo && (
                     <>
@@ -475,12 +475,14 @@ const ButtonsModal = styled.div`
     height: 37px;
     width: 134px;
     margin-left: 30px;
+    background-color: #FFFFFF;
+    color: #1877F2;
   }
 `;
 
 const ButtonYes = styled.button`
-background-color: #FFFFFF;
-color: #1877F2;
+background-color: #1877F2;
+color: #FFFFFF;
 `;
 
 const ButtonTrash = styled.button`

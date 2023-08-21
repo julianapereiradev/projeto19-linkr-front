@@ -112,7 +112,7 @@ export default function UserPostBox({ post }) {
           </Text>
           {post.url && (
             <a href={post.url} target="_blank" rel="noopener noreferrer">
-              <ContainerLink data-teste="link">
+              <ContainerLink data-test="link">
                 <ContainerDetails>
                   {urlMetadataInfo && (
                     <>
