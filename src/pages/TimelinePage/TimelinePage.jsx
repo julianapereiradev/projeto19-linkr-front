@@ -30,7 +30,7 @@ export default function TimelinePage() {
         setPosts(res.data);
       })
       .catch((erro) => {
-        navigate(pages.signIn);
+        navigate(pages.timeline);
         alert(erro);
       });
   }, [user]);
