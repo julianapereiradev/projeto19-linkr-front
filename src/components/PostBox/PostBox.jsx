@@ -231,9 +231,9 @@ export default function PostBox({ post }) {
             <DivInsideModal>
               <h2 style={{ textAlign: 'center' }}>Are you sure you want to delete this post?</h2>
               <ButtonsModal>
-                <button data-test="cancel" onClick={() => setShowDeleteModal(false)}>
+                <ButtonNo data-test="cancel" onClick={() => setShowDeleteModal(false)}>
                   No, go back
-                </button>
+                </ButtonNo>
                 <ButtonYes
                   data-test="confirm"
                   onClick={() => trashIconClicked(post.id)}
@@ -475,10 +475,14 @@ const ButtonsModal = styled.div`
     height: 37px;
     width: 134px;
     margin-left: 30px;
-    background-color: #FFFFFF;
-    color: #1877F2;
   }
 `;
+
+const ButtonNo = styled.button`
+background-color: #ffffff;
+color: #1877F2;
+`;
+
 
 const ButtonYes = styled.button`
 background-color: #1877F2;
