@@ -59,7 +59,7 @@ export default function TimelinePage() {
         window.location.reload();
       })
       .catch((error) => {
-        alert("Não foi possivel publicar o link: ", error);
+        alert("There was an error publishing your link");
         setPublishing(false);
         setDisable(false);
       });
