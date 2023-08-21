@@ -8,12 +8,15 @@ import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
 import { headersAuth } from "../../constants/functions";
 import reactStringReplace from "react-string-replace";
+import { useNavigate } from "react-router-dom";
 
 export default function UserPostBox({ post }) {
   const { user } = useContext(AuthContext);
 
   const [isLiked, setIsLiked] = useState(false);
   // const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
+
+  const navigate = useNavigate();
 
 
   function like(p) {
