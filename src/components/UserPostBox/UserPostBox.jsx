@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import axios from "axios";
 import { FaHeart } from "react-icons/fa";
@@ -7,38 +7,57 @@ import { FiHeart } from "react-icons/fi";
 import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
 import { headersAuth } from "../../constants/functions";
+import { Tooltip } from 'react-tooltip';
+import { ThreeDots } from "react-loader-spinner";
 import reactStringReplace from "react-string-replace";
 import { useNavigate } from "react-router-dom";
+
 
 export default function UserPostBox({ post }) {
   const { user } = useContext(AuthContext);
 
-  const [isLiked, setIsLiked] = useState(false);
+  const [selected, setSelected] = useState(false);
+  const [postLikes, setPostLikes] = useState();
   // const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
 
   const navigate = useNavigate();
 
 
-  function like(p) {
-    if (!isLiked) {
-      setIsLiked(true);
-    } else {
-      setIsLiked(false);
-    }
-    const body = {
-      userId: p.userId,
-      postId: p.id,
-    };
+  useEffect(() => {
+    const promiseLikes = axios.get(backendroute.getlikes + post.id, headersAuth(user.token))
+    promiseLikes.then((res) => {
+      setPostLikes(res.data)
+    })
+  }, [selected, post.id, post.url, user])
 
-    const promise = axios.post(
-      backendroute.likes,
-      body,
+  if (!postLikes) {
+    return <Load><ThreeDots color="#FFFFFF" height={50} width={50} /></Load>
+  }
+
+  function like() {
+
+    const promiseUser = axios.get(
+      backendroute.getDataUserByToken,
       headersAuth(user.token)
     );
-    promise.then((res) => {
-      console.log(res.data);
+    promiseUser.then((res) => {
+      const body = {
+        userId: res.data[0].userId,
+        postId: post.id,
+      };
+      const promise = axios.post(
+        backendroute.likes,
+        body,
+        headersAuth(user.token)
+      );
+      promise.then((res) => {
+        setSelected(!selected);
+      });
+      promise.catch((err) => {
+        alert(err.response.data);
+      });
     });
-    promise.catch((err) => {
+    promiseUser.catch((err) => {
       alert(err.response.data);
     });
   }
@@ -68,15 +87,24 @@ export default function UserPostBox({ post }) {
       <Container>
         <ContainerLike>
           <ContainerPhoto>
-            <UserImage 
-            src={post.pictureUrl} alt="Foto do Usuário" />
+            <UserImage
+              src={post.pictureUrl} alt="Foto do Usuário" />
           </ContainerPhoto>
-
-          {isLiked ? (
-            <FiHeart size="27" color="#FFF" onClick={() => like(post)} />
-          ) : (
-            <FaHeart size="27" color="#AC0000" onClick={() => like(post)} />
-          )}
+          <Icon>
+            <LikeTooltip >
+              {postLikes[0].isLiked ? (
+                <FaHeart color="#AC0000" size={20} onClick={() => like()} />
+              ) : (
+                <FiHeart color="#fff" size={20} onClick={() => like()} />
+              )}
+              <a data-tooltip-id={String(post.id)} data-tooltip-place="bottom">
+                <SCQntLikes>{postLikes[0].count} likes</SCQntLikes>
+              </a>
+              <SCTooltip id={String(post.id)} style={{ backgroundColor: "#fff" }}>
+                <SCTooltipText>{postLikes[0].whoLiked}</SCTooltipText>
+              </SCTooltip>
+            </LikeTooltip>
+          </Icon>
         </ContainerLike>
 
         <ContainerContent>
@@ -104,7 +132,7 @@ export default function UserPostBox({ post }) {
                 </p>
               </div>
             )}*/}
-            
+
           </Link>
         </ContainerContent>
       </Container>
@@ -176,4 +204,48 @@ const Link = styled.div`
   letter-spacing: 0em;
   text-align: left;
   color: #cecece;
+`;
+
+const LikeTooltip = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+`;
+const Load = styled.div`
+    align-self: center;
+    display: flex;
+`;
+
+const SCQntLikes = styled.p`
+    margin-top: 10px;
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 11;
+    color: black;
+`;
+
+const SCTooltip = styled(Tooltip)`
+    box-shadow: 0px 4px 4px 0px #000;
+    width: 160px;
+    height: 24px;
+    opacity: 0.9;
+    background-color: #fff;
+
+    display: flex;
+    align-items: center;
+`;
+
+const SCTooltipText = styled.p`
+     font-family: "Lato";
+    font-weight: 700;
+    font-size: 11;
+    color: black;
+    text-align: center;
+`;
+
+const Icon = styled.div`
+    &:hover {
+        cursor: pointer;
+    }
 `;
