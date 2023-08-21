@@ -11,7 +11,7 @@ export const SideBarContainer = styled.aside`
   height: 400px;
   margin-top: 82px;
   line-height: 32px;
-  @media(max-width: 600px) {
+  @media(max-width: 625px) {
     display: none;
   }
 `;

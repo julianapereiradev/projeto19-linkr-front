@@ -67,6 +67,9 @@ const Container = styled.div`
     display: flex;
     margin-bottom: 25px;
     margin-top: 50px;
+    @media(max-width: 625px) {
+      width: 100%;
+    }
 `
 const InputUrl = styled.input`
     width: 503px;

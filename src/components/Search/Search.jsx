@@ -69,6 +69,9 @@ const SearchContainer = styled.div`
     font-weight: 300;
     font-family: "Lato", sans-serif;
   }
+  @media(max-width: 625px) {
+    display: none;
+  }
 `;
 
 const ResultSearchContaienr = styled.div`

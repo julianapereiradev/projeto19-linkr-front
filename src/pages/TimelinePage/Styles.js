@@ -21,4 +21,7 @@ export const ContainerPost = styled.div`
     width: 611px;
     height:100vh;
     margin-top: 78px;
+    @media(max-width: 625px) {
+        width: 100%;
+    }
 `

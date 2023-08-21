@@ -449,6 +449,9 @@ const Container = styled.div`
   border-radius: 20px;
   display: flex;
   margin-bottom: 15px;
+  @media(max-width: 625px) {
+    width: 500px;
+  }
 `;
 
 const Text = styled.text`

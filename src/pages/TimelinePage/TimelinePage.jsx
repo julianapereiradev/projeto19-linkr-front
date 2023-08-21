@@ -64,7 +64,7 @@ export default function TimelinePage() {
       });
   }
 
-  console.log("posts", posts);
+  //console.log("posts", posts);
 
   return (
     <>
