@@ -29,6 +29,9 @@ display: flex;
 flex-direction: row;
 align-items: center;
 margin-bottom: 30px;
+@media(max-width: 600px) {
+  margin-left: 20px;
+}
 `;
 
 export const UserImage = styled.img`

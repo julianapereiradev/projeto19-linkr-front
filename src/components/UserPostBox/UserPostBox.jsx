@@ -178,6 +178,9 @@ const LinkDescription = styled.p`
   color: #9b9595;
   margin-top: 10px;
   margin-left: 15px;
+  @media(max-width: 600px) {
+    font-size: 8px;
+  }
 `;
 
 const LinkTitle = styled.p`
@@ -190,6 +193,9 @@ const LinkTitle = styled.p`
   color: #cecece;
   margin-top: 20px;
   margin-left: 15px;
+  @media(max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 const UserImage = styled.img`
@@ -226,8 +232,9 @@ const Container = styled.div`
   border-radius: 20px;
   display: flex;
   margin-bottom: 15px;
-  @media(max-width: 625px) {
-    width: 100%;
+  @media (max-width: 600px) {
+    width: 100%; 
+    border-radius: 0px;
   }
 `;
 const Text = styled.text`
@@ -259,6 +266,10 @@ const Link = styled.div`
   letter-spacing: 0em;
   text-align: left;
   color: #cecece;
+  margin-left: 15px;
+  @media(max-width: 600px) {
+    font-size: 7px;
+  }
 `; 
 
 const LikeTooltip = styled.div`
