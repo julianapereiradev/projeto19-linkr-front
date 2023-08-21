@@ -17,7 +17,7 @@ export default function HashtagPage() {
   const hashtag = params.id;
 
   headersAuth(user.token)
-/*
+
   useEffect(() => {
     validateUser(user, setUser);
 
@@ -29,7 +29,7 @@ export default function HashtagPage() {
         console.log(res.data.message);
       });
   }, [user]);
-*/
+
 
   return (
     <>
