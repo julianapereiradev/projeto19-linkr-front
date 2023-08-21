@@ -9,6 +9,9 @@ import { backendroute } from "../../routes/routes";
 import { headersAuth } from "../../constants/functions";
 import { Tooltip } from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
+import reactStringReplace from "react-string-replace";
+import { useNavigate } from "react-router-dom";
+
 
 export default function UserPostBox({ post }) {
   const { user } = useContext(AuthContext);
@@ -16,6 +19,8 @@ export default function UserPostBox({ post }) {
   const [selected, setSelected] = useState(false);
   const [postLikes, setPostLikes] = useState();
   // const [urlMetadataInfo, setUrlMetadataInfo] = useState(null);
+
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -104,7 +109,17 @@ export default function UserPostBox({ post }) {
 
         <ContainerContent>
           <Username>{post.username}</Username>
-          <Text>{post.content}</Text>
+          <Text>
+            {reactStringReplace(
+              post.content,
+              /(?<=[\s>]|^)#(\w*[A-Za-z_]+\w*)/g,
+              (match, i) => (
+                <span onClick={() => navigate(`/hashtag/${match}`)}>
+                  #{match}
+                </span>
+              )
+            )}
+          </Text>
           <Link>
             <h1>Link: {post.url}</h1>
 

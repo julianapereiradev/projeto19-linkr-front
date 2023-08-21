@@ -49,7 +49,6 @@ export default function Header() {
     
     } catch (error) {
       alert(error.response.data.message);
-      console.log('error em deleteLogout')
     }
 
     localStorage.removeItem('user');

@@ -190,11 +190,11 @@ export default function PostBox({ post }) {
 
         <ContainerContent>
           <ContainerTrashRow>
-            <Username onClick={() => openUrlId(post.userId)}>
+            <Username data-test="username" onClick={() => openUrlId(post.userId)}>
               {post.username}
             </Username>
             <PenTrashContainer>
-              <PenContainer src={Pen} alt="pen" onClick={isEditing ? handleCancelEdit : startEditing}/>
+              <PenContainer data-teste="edit-btn" src={Pen} alt="pen" onClick={isEditing ? handleCancelEdit : startEditing}/>
               <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}><TbTrashFilled
                 color="#FFFFFF"
                 size="25"
@@ -255,9 +255,10 @@ export default function PostBox({ post }) {
 
           </Modal>
 
-          <Text>
+          <Text data-test="description">
             {isEditing ? (
               <textarea
+                data-test="edit-input"
                 ref={textInputRef}
                 value={editedContent}
                 onChange={(e) => {
@@ -283,7 +284,7 @@ export default function PostBox({ post }) {
 
           {post.url && (
             <a href={post.url} target="_blank" rel="noopener noreferrer">
-              <ContainerLink>
+              <ContainerLink data-teste="link">
                 <ContainerDetails>
                   {urlMetadataInfo && (
                     <>
