@@ -68,6 +68,9 @@ const SearchContainer = styled.div`
     font-size: 19px;
     font-weight: 300;
     font-family: "Lato", sans-serif;
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 `;
 

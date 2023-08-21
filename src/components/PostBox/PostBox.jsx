@@ -352,7 +352,11 @@ export default function PostBox({ post }) {
   );
 }
 
-const PenTrashContainer = styled.div``;
+const PenTrashContainer = styled.div`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
 const PenContainer = styled.img`
   width: 23px;
   height: 23px;
@@ -449,6 +453,10 @@ const Container = styled.div`
   border-radius: 20px;
   display: flex;
   margin-bottom: 15px;
+  @media (max-width: 600px) {
+    width: 100%; 
+    border-radius: 0px;
+  }
 `;
 
 const Text = styled.text`
