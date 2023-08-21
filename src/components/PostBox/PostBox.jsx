@@ -7,8 +7,8 @@ import { headersAuth } from "../../constants/functions";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { Tooltip } from 'react-tooltip';
-import reactStringReplace from 'react-string-replace';
+import { Tooltip } from "react-tooltip";
+import reactStringReplace from "react-string-replace";
 import NoImage from "../../assets/noimage2.png";
 import { TbTrashFilled } from "react-icons/tb";
 import Modal from "react-modal";
@@ -51,14 +51,14 @@ export default function PostBox({ post }) {
       textInputRef.current.focus();
     }
   };
-  
+
   const handleCancelEdit = () => {
     if (changesMade) {
       const confirmDiscard = window.confirm("Descartar alterações não salvas?");
       if (confirmDiscard) {
         setIsEditing(false);
         setChangesMade(false);
-        setEditedContent(post.content); 
+        setEditedContent(post.content);
       }
     } else {
       setIsEditing(false);
@@ -67,7 +67,11 @@ export default function PostBox({ post }) {
 
   const handleSaveEdit = async () => {
     axios
-      .put(backendroute.updatePostById + post.id, { content: editedContent }, headersAuth(user.token))
+      .put(
+        backendroute.updatePostById + post.id,
+        { content: editedContent },
+        headersAuth(user.token)
+      )
       .then((response) => {
         setIsEditing(false);
         setChangesMade(false);
@@ -86,28 +90,34 @@ export default function PostBox({ post }) {
       handleCancelEdit();
     }
     if (e.key === "Enter") {
-      e.preventDefault(); 
-      handleSaveEdit(); 
+      e.preventDefault();
+      handleSaveEdit();
     }
   };
 
   useEffect(() => {
-    const promiseLikes = axios.get(backendroute.getlikes + post.id, headersAuth(user.token))
+    const promiseLikes = axios.get(
+      backendroute.getlikes + post.id,
+      headersAuth(user.token)
+    );
     promiseLikes.then((res) => {
-      setPostLikes(res.data)
-    })
+      setPostLikes(res.data);
+    });
 
     if (post.url) {
       fetchUrlMetadata(post.url);
     }
-  }, [selected, post.id, post.url, user])
+  }, [selected, post.id, post.url, user]);
 
   if (!postLikes) {
-    return <Load><ThreeDots color="#FFFFFF" height={50} width={50} /></Load>
+    return (
+      <Load>
+        <ThreeDots color="#FFFFFF" height={50} width={50} />
+      </Load>
+    );
   }
 
   function like() {
-
     const promiseUser = axios.get(
       backendroute.getDataUserByToken,
       headersAuth(user.token)
@@ -158,7 +168,8 @@ export default function PostBox({ post }) {
     removeItem(postId);
   };
 
-
+  console.log("post.url aqui:", post.url);
+  console.log("urlMetaDataInfo", urlMetadataInfo);
 
   return (
     <>
@@ -172,17 +183,34 @@ export default function PostBox({ post }) {
             />
           </ContainerPhoto>
           <Icon>
-            <LikeTooltip >
+            <LikeTooltip>
               {postLikes[0].isLiked ? (
-                <FaHeart color="#AC0000" size={20} onClick={() => like()} />
+                <FaHeart
+                  data-test="like-btn"
+                  color="#AC0000"
+                  size={20}
+                  onClick={() => like()}
+                />
               ) : (
-                <FiHeart color="#fff" size={20} onClick={() => like()} />
+                <FiHeart
+                  data-test="like-btn"
+                  color="#fff"
+                  size={20}
+                  onClick={() => like()}
+                />
               )}
               <a data-tooltip-id={String(post.id)} data-tooltip-place="bottom">
-                <SCQntLikes>{postLikes[0].count} likes</SCQntLikes>
+                <SCQntLikes data-test="counter">
+                  {postLikes[0].count} likes
+                </SCQntLikes>
               </a>
-              <SCTooltip id={String(post.id)} style={{ backgroundColor: "#fff" }}>
-                <SCTooltipText>{postLikes[0].whoLiked}</SCTooltipText>
+              <SCTooltip
+                id={String(post.id)}
+                style={{ backgroundColor: "#fff" }}
+              >
+                <SCTooltipText data-test="tooltip">
+                  {postLikes[0].whoLiked}
+                </SCTooltipText>
               </SCTooltip>
             </LikeTooltip>
           </Icon>
@@ -190,15 +218,22 @@ export default function PostBox({ post }) {
 
         <ContainerContent>
           <ContainerTrashRow>
-            <Username data-test="username" onClick={() => openUrlId(post.userId)}>
+            <Username
+              data-test="username"
+              onClick={() => openUrlId(post.userId)}
+            >
               {post.username}
             </Username>
             <PenTrashContainer>
-              <PenContainer data-teste="edit-btn" src={Pen} alt="pen" onClick={isEditing ? handleCancelEdit : startEditing}/>
-              <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}><TbTrashFilled
-                color="#FFFFFF"
-                size="25"
-              /></ButtonTrash>
+              <PenContainer
+                data-test="edit-btn"
+                src={Pen}
+                alt="pen"
+                onClick={isEditing ? handleCancelEdit : startEditing}
+              />
+              <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}>
+                <TbTrashFilled color="#FFFFFF" size="25" />
+              </ButtonTrash>
             </PenTrashContainer>
           </ContainerTrashRow>
 
@@ -207,9 +242,9 @@ export default function PostBox({ post }) {
             onRequestClose={() => setShowDeleteModal(false)}
             style={{
               overlay: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 zIndex: 1000,
               },
               content: {
@@ -221,19 +256,24 @@ export default function PostBox({ post }) {
                 width: "597px",
                 height: "250px",
                 borderRadius: "50px",
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
               },
             }}
           >
             <DivInsideModal>
-              <h2 style={{ textAlign: 'center' }}>Are you sure you want to delete this post?</h2>
+              <h2 style={{ textAlign: "center" }}>
+                Are you sure you want to delete this post?
+              </h2>
               <ButtonsModal>
-                <button data-test="cancel" onClick={() => setShowDeleteModal(false)}>
+                <ButtonNo
+                  data-test="cancel"
+                  onClick={() => setShowDeleteModal(false)}
+                >
                   No, go back
-                </button>
+                </ButtonNo>
                 <ButtonYes
                   data-test="confirm"
                   onClick={() => trashIconClicked(post.id)}
@@ -252,7 +292,6 @@ export default function PostBox({ post }) {
                 </ButtonYes>
               </ButtonsModal>
             </DivInsideModal>
-
           </Modal>
 
           <Text data-test="description">
@@ -281,10 +320,9 @@ export default function PostBox({ post }) {
               )
             )}
           </Text>
-
-          {post.url && (
-            <a href={post.url} target="_blank" rel="noopener noreferrer">
-              <ContainerLink data-teste="link">
+          {post.url && urlMetadataInfo && (
+            <a href={post.url} target="_blank" rel="noopener noreferrer" data-test="link">
+              <ContainerLink>
                 <ContainerDetails>
                   {urlMetadataInfo && (
                     <>
@@ -298,8 +336,8 @@ export default function PostBox({ post }) {
                 </ContainerDetails>
                 <ContainerImage>
                   {urlMetadataInfo &&
-                    urlMetadataInfo.images &&
-                    urlMetadataInfo.images.length > 0 ? (
+                  urlMetadataInfo.images &&
+                  urlMetadataInfo.images.length > 0 ? (
                     <LinkImage src={urlMetadataInfo.images[0]} alt="metadata" />
                   ) : (
                     <LinkImage src={NoImage} alt="metadata" />
@@ -384,9 +422,9 @@ const ContainerLike = styled.div`
   align-items: center;
 `;
 const Icon = styled.div`
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ContainerTrashRow = styled.div`
@@ -458,13 +496,12 @@ const ContainerLink = styled.div`
 `;
 
 const DivInsideModal = styled.div`
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 `;
-
 
 const ButtonsModal = styled.div`
   display: flex;
@@ -478,51 +515,55 @@ const ButtonsModal = styled.div`
   }
 `;
 
+const ButtonNo = styled.button`
+  background-color: #ffffff;
+  color: #1877f2;
+`;
+
 const ButtonYes = styled.button`
-background-color: #FFFFFF;
-color: #1877F2;
+  background-color: #1877f2;
+  color: #ffffff;
 `;
 
 const ButtonTrash = styled.button`
-width: 25px;
-height: 25px;
-background-color: #151515;
+  width: 25px;
+  height: 25px;
+  background-color: #151515;
 `;
 
 const LikeTooltip = styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 const Load = styled.div`
-    align-self: center;
-    display: flex;
+  align-self: center;
+  display: flex;
 `;
 
 const SCQntLikes = styled.p`
-    margin-top: 10px;
-    font-family: "Lato";
-    font-weight: 400;
-    font-size: 11;
-    color: black;
+  margin-top: 10px;
+  font-family: "Lato";
+  font-weight: 400;
+  font-size: 11;
+  color: black;
 `;
 
 const SCTooltip = styled(Tooltip)`
-    box-shadow: 0px 4px 4px 0px #000;
-    width: 160px;
-    height: 24px;
-    opacity: 0.9;
-    background-color: #fff;
+  box-shadow: 0px 4px 4px 0px #000;
+  width: 160px;
+  height: 24px;
+  opacity: 0.9;
+  background-color: #fff;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 `;
 
 const SCTooltipText = styled.p`
-     font-family: "Lato";
-    font-weight: 700;
-    font-size: 11;
-    color: black;
-    text-align: center;
+  font-family: "Lato";
+  font-weight: 700;
+  font-size: 11;
+  color: black;
+  text-align: center;
 `;

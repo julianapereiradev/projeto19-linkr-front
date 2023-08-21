@@ -5,8 +5,9 @@ import AuthContext from "../../contexts/AuthContext";
 import { headersAuth, validateUser } from "../../constants/functions";
 import { backendroute, pages } from "../../routes/routes";
 import Header from "../../components/Header/Header";
-import {ContainerUserPostsPage, ContainerPost, ColorText, ContainerText, UserImage, BoxUser} from "./Styles"
+import {ContainerUserPostsPage, ContainerPost, ColorText, ContainerText, UserImage, BoxUser, PageContainer} from "./Styles"
 import UserPostBox from "../../components/UserPostBox/UserPostBox";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 
 export default function UserPostsPage() {
@@ -14,7 +15,7 @@ export default function UserPostsPage() {
   const [userPosts, setuserPosts] = useState(undefined);
   const navigate = useNavigate();
   const { id } = useParams();
-
+  
   useEffect(() => {
     validateUser(user, setUser);
 
@@ -41,25 +42,27 @@ if(!userPosts) {
 }
 
   return (
-<>
-<Header />
-
-<ContainerUserPostsPage>
-        <ContainerPost>
-          <BoxUser>
-          <UserImage src={userPosts[0]?.pictureUrl} alt="Foto do Usuário" />
-          <ColorText>{userPosts[0]?.username}</ColorText>
-          </BoxUser>
-        
-          {userPosts ? (
-            userPosts.map((post) => <UserPostBox key={post.id} post={post} />)
-          ) : (
-            <ContainerText>
-              <div>Não existem posts deste usuário!</div>
-            </ContainerText>
-          )}
-        </ContainerPost>
-      </ContainerUserPostsPage>
+    <>
+      <Header />
+      <PageContainer>
+        <ContainerUserPostsPage>
+          <ContainerPost>
+            <BoxUser>
+            <UserImage src={userPosts[0]?.pictureUrl} alt="Foto do Usuário" />
+            <ColorText>{userPosts[0]?.username}</ColorText>
+            </BoxUser>
+          
+            {userPosts ? (
+              userPosts.map((post) => <UserPostBox key={post.id} post={post} />)
+            ) : (
+              <ContainerText>
+                <div>There are no posts yet for this user!</div>
+              </ContainerText>
+            )}*
+          </ContainerPost>
+        </ContainerUserPostsPage>
+        <Sidebar /> 
+      </PageContainer>
     </>
   );
 }

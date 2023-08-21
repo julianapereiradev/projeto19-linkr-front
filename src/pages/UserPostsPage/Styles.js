@@ -47,3 +47,9 @@ export const ColorText = styled.h1`
     text-align: left;
     margin-left: 10px;
 `;
+
+export const PageContainer = styled.main`
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+`;

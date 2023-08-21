@@ -25,7 +25,7 @@ export default function Sidebar() {
   }, [user]);
 
   return (
-    <SideBarContainer>
+    <SideBarContainer data-test="trending">
       <Title> trending </Title>
       <Line />
       <HashtagsContainer data-test="trending">

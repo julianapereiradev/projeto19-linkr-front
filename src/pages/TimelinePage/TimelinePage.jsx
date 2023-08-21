@@ -21,7 +21,6 @@ export default function TimelinePage() {
   const [disable, setDisable] = useState(false);
   const [publishing, setPublishing] = useState(false);
 
-  
   useEffect(() => {
     validateUser(user, setUser);
 
@@ -31,11 +30,10 @@ export default function TimelinePage() {
         setPosts(res.data);
       })
       .catch((erro) => {
-        navigate(pages.signIn);
+        navigate(pages.timeline);
         alert(erro);
       });
   }, [user]);
-  
 
   function postUrlLink(e) {
     e.preventDefault();
@@ -43,7 +41,7 @@ export default function TimelinePage() {
     setPublishing(true);
 
     const informations = { url: url, content: content };
-    if(!url){
+    if (!url) {
       alert("É necessário informar uma url");
       setPublishing(false);
       setDisable(false);
@@ -60,11 +58,14 @@ export default function TimelinePage() {
         window.location.reload();
       })
       .catch((error) => {
-        alert(error.response.data);
+        alert("There was an error publishing your link");
         setPublishing(false);
         setDisable(false);
       });
   }
+
+  console.log("posts", posts);
+
   return (
     <>
       <Header />
@@ -111,4 +112,6 @@ const ContainerText = styled.div`
   margin-top: 50px;
   font-weight: 600;
   font-size: 30px;
+  font-family: 'Oswald', sans-serif;
+  color: #FFFFFF;
 `;
