@@ -7,6 +7,7 @@ import { FiHeart } from "react-icons/fi";
 import AuthContext from "../../contexts/AuthContext";
 import { backendroute } from "../../routes/routes";
 import { headersAuth } from "../../constants/functions";
+import reactStringReplace from "react-string-replace";
 
 export default function UserPostBox({ post }) {
   const { user } = useContext(AuthContext);
@@ -77,7 +78,17 @@ export default function UserPostBox({ post }) {
 
         <ContainerContent>
           <Username>{post.username}</Username>
-          <Text>{post.content}</Text>
+          <Text>
+            {reactStringReplace(
+              post.content,
+              /(?<=[\s>]|^)#(\w*[A-Za-z_]+\w*)/g,
+              (match, i) => (
+                <span onClick={() => navigate(`/hashtag/${match}`)}>
+                  #{match}
+                </span>
+              )
+            )}
+          </Text>
           <Link>
             <h1>Link: {post.url}</h1>
 
