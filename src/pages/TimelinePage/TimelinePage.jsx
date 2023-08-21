@@ -85,7 +85,7 @@ export default function TimelinePage() {
             posts.map((post) => <PostBox key={post.id} post={post} />)
           ) : (
             <ContainerText>
-              <div data-test="message">Não existem posts!</div>
+              <div data-test="message">There are no posts yet</div>
             </ContainerText>
           )}
         </ContainerPost>

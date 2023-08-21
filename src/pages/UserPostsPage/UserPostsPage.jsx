@@ -55,7 +55,7 @@ if(!userPosts) {
             userPosts.map((post) => <UserPostBox key={post.id} post={post} />)
           ) : (
             <ContainerText>
-              <div>Não existem posts deste usuário!</div>
+              <div>There are no posts yet for this user!</div>
             </ContainerText>
           )}
         </ContainerPost>

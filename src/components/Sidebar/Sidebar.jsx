@@ -23,12 +23,12 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <SideBarContainer>
+    <SideBarContainer data-test="trending">
       <Title> trending </Title>
       <Line />
       
       {hashtags.map((hashtag, index) =>
-        <Hashtag key={index} onClick={() => navigate(`/hashtag/${hashtag.hashtag}`)}>
+        <Hashtag data-test="hashtag" key={index} onClick={() => navigate(`/hashtag/${hashtag.hashtag}`)}>
           # {hashtag.hashtag}
         </Hashtag>
       )}

@@ -15,11 +15,11 @@ export default function PublishBox({
     <Container data-test="publish-box">
       <ContainerPhoto src={user.pictureUrl} alt="Foto do usuário" />
       <ContainerInputs>
-        <Text>O que você vai compartilhar hoje?</Text>
+        <Text>What are you going to share today?</Text>
         <InputUrl
           data-test="link"
           type="text"
-          placeholder="http://"
+          placeholder="http://..."
           value={url}
           onChange={onUrlChange}
           disabled={disable}
@@ -27,7 +27,7 @@ export default function PublishBox({
         <InputContent
           data-test="description"
           type="text"
-          placeholder="Artigo incrível sobre #javascript"
+          placeholder="Awesome article about #javascript"
           value={content}
           onChange={onContentChange}
           disabled={disable}
