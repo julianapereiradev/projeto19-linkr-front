@@ -20,7 +20,6 @@ export default function TimelinePage() {
   const [disable, setDisable] = useState(false);
   const [publishing, setPublishing] = useState(false);
 
-  
   useEffect(() => {
     validateUser(user, setUser);
 
@@ -34,7 +33,6 @@ export default function TimelinePage() {
         alert(erro);
       });
   }, [user]);
-  
 
   function postUrlLink(e) {
     e.preventDefault();
@@ -42,7 +40,7 @@ export default function TimelinePage() {
     setPublishing(true);
 
     const informations = { url: url, content: content };
-    if(!url){
+    if (!url) {
       alert("É necessário informar uma url");
       setPublishing(false);
       setDisable(false);
@@ -64,6 +62,9 @@ export default function TimelinePage() {
         setDisable(false);
       });
   }
+
+  console.log("posts", posts);
+
   return (
     <>
       <Header />
@@ -75,13 +76,13 @@ export default function TimelinePage() {
             url={url}
             content={content}
             disable={disable}
-            publishing={publishing} 
+            publishing={publishing}
             onUrlChange={(e) => setUrl(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             onPublish={postUrlLink}
           />
 
-          {posts ? (
+          {posts && posts.length > 0 ? (
             posts.map((post) => <PostBox key={post.id} post={post} />)
           ) : (
             <ContainerText>
@@ -101,4 +102,6 @@ const ContainerText = styled.div`
   margin-top: 50px;
   font-weight: 600;
   font-size: 30px;
+  font-family: 'Oswald', sans-serif;
+  color: #FFFFFF;
 `;
