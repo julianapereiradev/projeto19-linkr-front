@@ -25,10 +25,11 @@ export const ContainerText = styled.div`
 `;
 
 export const BoxUser = styled.div`
-display: flex;
-flex-direction: row;
-align-items: center;
-margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 600px;
 `;
 
 export const UserImage = styled.img`
