@@ -14,6 +14,7 @@ import { TbTrashFilled } from "react-icons/tb";
 import Modal from "react-modal";
 import { ThreeDots } from "react-loader-spinner";
 import Pen from "../../assets/pen.png";
+import { IoChatbubblesOutline } from "react-icons/io5";
 
 export default function PostBox({ post }) {
   const { user } = useContext(AuthContext);
@@ -27,6 +28,7 @@ export default function PostBox({ post }) {
   const [editedContent, setEditedContent] = useState(post.content);
   const textInputRef = useRef(null);
   const [changesMade, setChangesMade] = useState(false);
+  const [totalComments, setTotalComments] = useState(0);
 
   const navigate = useNavigate();
 
@@ -53,7 +55,7 @@ export default function PostBox({ post }) {
       }
     }, 0); // Defina um pequeno atraso, como 0ms, para aplicar o foco após a atualização do estado.
   };
-  
+
   const handleCancelEdit = () => {
     if (changesMade) {
       const confirmDiscard = window.confirm("Descartar alterações não salvas?");
@@ -105,6 +107,17 @@ export default function PostBox({ post }) {
     promiseLikes.then((res) => {
       setPostLikes(res.data);
     });
+
+    const promiseComents = axios.get(
+      backendroute.getComments + post.id + '/comments'
+    );
+    promiseComents.then(res => {
+      setTotalComments(res.data.length)
+    });
+    promiseComents.catch(err => {
+      console.log(err.message)
+    });
+
 
     if (post.url) {
       fetchUrlMetadata(post.url);
@@ -213,6 +226,14 @@ export default function PostBox({ post }) {
               </SCTooltip>
             </LikeTooltip>
           </Icon>
+
+          <IoChatbubblesOutline
+            size={20}
+            color="ffffff"
+          />
+          <SCQntLikes>
+            {totalComments} comments
+          </SCQntLikes>
         </ContainerLike>
 
         <ContainerContent>
@@ -224,15 +245,15 @@ export default function PostBox({ post }) {
               {post.username}
             </Username>
             <PenTrashContainer>
-            {post.userId === user.lastuserId && (
+              {post.userId === user.lastuserId && (
                 <PenContainer
-                data-test="edit-btn"
-                src={Pen}
-                alt="pen"
-                onClick={isEditing ? handleCancelEdit : startEditing}
-              />
+                  data-test="edit-btn"
+                  src={Pen}
+                  alt="pen"
+                  onClick={isEditing ? handleCancelEdit : startEditing}
+                />
               )}
-              
+
               {post.userId === user.lastuserId && (
                 <ButtonTrash data-test="delete-btn" onClick={openDeleteModal}>
                   <TbTrashFilled color="#FFFFFF" size="25" />
@@ -346,8 +367,8 @@ export default function PostBox({ post }) {
                 </ContainerDetails>
                 <ContainerImage>
                   {urlMetadataInfo &&
-                  urlMetadataInfo.images &&
-                  urlMetadataInfo.images.length > 0 ? (
+                    urlMetadataInfo.images &&
+                    urlMetadataInfo.images.length > 0 ? (
                     <LinkImage src={urlMetadataInfo.images[0]} alt="metadata" />
                   ) : (
                     <LinkImage src={NoImage} alt="metadata" />
@@ -574,6 +595,7 @@ const Load = styled.div`
 
 const SCQntLikes = styled.p`
   margin-top: 10px;
+  margin-bottom: 10px;
   font-family: "Lato";
   font-weight: 400;
   font-size: 11;
