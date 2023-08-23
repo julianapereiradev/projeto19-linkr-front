@@ -10,30 +10,47 @@ import { ColorText, ContainerTimeline, ContainerPost } from "./Styles";
 import Header from "../../components/Header/Header";
 import PublishBox from "../../components/PublishBox/PublishBox";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function TimelinePage() {
   const { user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [posts, setPosts] = useState(undefined);
-  const [url, setUrl] = useState("");
-  const [content, setContent] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [url, setUrl] = useState('');
+  const [content, setContent] = useState('');
   const [disable, setDisable] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     validateUser(user, setUser);
-
-    axios
-      .get(backendroute.getAllPosts, headersAuth(user.token))
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((erro) => {
-        navigate(pages.timeline);
-        alert(erro);
-      });
+    loadPosts();
   }, [user]);
+
+  const loadPosts = () => {
+    axios
+      .get(backendroute.getAllPosts, {
+        ...headersAuth(user.token),
+      })
+      .then((res) => {
+        const newPosts = res.data;
+        setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+        if (newPosts.length < 10) {
+          setHasMore(false);
+        }
+      })
+      .catch((error) => {
+        navigate(pages.timeline);
+        alert(error);
+      });
+  };
+
+  const handleInfiniteLoad = () => {
+    if (hasMore) {
+      loadPosts();
+    }
+  };
 
   function postUrlLink(e) {
     e.preventDefault();
@@ -64,8 +81,6 @@ export default function TimelinePage() {
       });
   }
 
-  //console.log("posts", posts);
-
   return (
     <>
       <Header />
@@ -78,19 +93,28 @@ export default function TimelinePage() {
               url={url}
               content={content}
               disable={disable}
-              publishing={publishing} 
+              publishing={publishing}
               onUrlChange={(e) => setUrl(e.target.value)}
               onContentChange={(e) => setContent(e.target.value)}
               onPublish={postUrlLink}
             />
 
-            {posts ? (
-              posts.map((post) => <PostBox key={post.id} post={post} />)
-            ) : (
-              <ContainerText>
-                <div data-test="message">Não existem posts!</div>
-              </ContainerText>
-            )}
+            <InfiniteScroll
+              pageStart={1}
+              loadMore={handleInfiniteLoad}
+              hasMore={hasMore}
+              loader={<div className="loader" key={0}>Carregando...</div>}
+            >
+              {posts.length > 0 ? (
+                posts.map((post) => (
+                  <PostBox key={post.id} post={post} />
+                ))
+              ) : (
+                <ContainerText>
+                  <div data-test="message">Não existem posts!</div>
+                </ContainerText>
+              )}
+            </InfiniteScroll>
           </ContainerPost>
         </ContainerTimeline>
         <Sidebar />
