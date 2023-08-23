@@ -6,8 +6,8 @@ export const pages = {
     userPosts: '/user/'
 }
 
-//const API_URL = 'http://localhost:5000';
- const API_URL = `${process.env.REACT_APP_API_URL}`
+const API_URL = 'http://localhost:5000';
+ //const API_URL = `${process.env.REACT_APP_API_URL}`
 
 export const backendroute = {
     postSignUp: API_URL + '/signup',
@@ -24,5 +24,6 @@ export const backendroute = {
     getDataUserByToken: API_URL + '/sessions',
     getSearchByName: API_URL + '/search/',
     deletePostById: API_URL + '/posts/',
-    updatePostById: API_URL + '/posts/'
+    updatePostById: API_URL + '/posts/',
+    getComments: API_URL + '/post/'
 }
