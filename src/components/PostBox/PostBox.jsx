@@ -12,9 +12,10 @@ import reactStringReplace from "react-string-replace";
 import NoImage from "../../assets/noimage2.png";
 import { TbTrashFilled } from "react-icons/tb";
 import Modal from "react-modal";
-import { ThreeDots } from "react-loader-spinner";
+import {  ThreeDots } from "react-loader-spinner";
 import Pen from "../../assets/pen.png";
 import { IoChatbubblesOutline } from "react-icons/io5";
+import Comments from "../Comments/Comments";
 
 export default function PostBox({ post }) {
   const { user } = useContext(AuthContext);
@@ -29,6 +30,7 @@ export default function PostBox({ post }) {
   const textInputRef = useRef(null);
   const [changesMade, setChangesMade] = useState(false);
   const [totalComments, setTotalComments] = useState(0);
+  const [commentstate, setCommentState] = useState(false);
 
   const navigate = useNavigate();
 
@@ -240,6 +242,11 @@ setShowNewPostsButton(false);
     removeItem(postId);
   };
 
+  function showComments() {
+    console.log(commentstate)
+      setCommentState(!commentstate)
+  }
+
   return (
     <>
       <Container data-test="post">
@@ -283,11 +290,14 @@ setShowNewPostsButton(false);
               </SCTooltip>
             </LikeTooltip>
           </Icon>
+          <CommentContainer>
+            <IoChatbubblesOutline
+              size={20}
+              color="ffffff"
+              onClick={() => showComments()}
+            />
+          </CommentContainer>
 
-          <IoChatbubblesOutline
-            size={20}
-            color="ffffff"
-          />
           <SCQntLikes>
             {totalComments} comments
           </SCQntLikes>
@@ -436,6 +446,13 @@ setShowNewPostsButton(false);
           )}
         </ContainerContent>
       </Container>
+      <Comments
+        setTotalComments={setTotalComments}
+        commentstate={commentstate}
+        postId={post.id}
+        isRepost={user.username}
+        whoPosted={post.userId}
+      />
     </>
   );
 }
@@ -677,3 +694,10 @@ const SCTooltipText = styled.p`
   color: black;
   text-align: center;
 `;
+const CommentContainer = styled.div`
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+    cursor: pointer;
+ `

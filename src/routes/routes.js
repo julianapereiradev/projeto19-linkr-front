@@ -25,5 +25,6 @@ export const backendroute = {
     getSearchByName: API_URL + '/search/',
     deletePostById: API_URL + '/posts/',
     updatePostById: API_URL + '/posts/',
-    getComments: API_URL + '/post/'
+    getComments: API_URL + '/post/',
+    createComment: API_URL + '/post/'
 }
