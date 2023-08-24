@@ -12,9 +12,10 @@ import reactStringReplace from "react-string-replace";
 import NoImage from "../../assets/noimage2.png";
 import { TbTrashFilled } from "react-icons/tb";
 import Modal from "react-modal";
-import { ThreeDots } from "react-loader-spinner";
+import {  ThreeDots } from "react-loader-spinner";
 import Pen from "../../assets/pen.png";
 import { IoChatbubblesOutline } from "react-icons/io5";
+import Comments from "../Comments/Comments";
 
 export default function PostBox({ post }) {
   const { user } = useContext(AuthContext);
@@ -29,12 +30,58 @@ export default function PostBox({ post }) {
   const textInputRef = useRef(null);
   const [changesMade, setChangesMade] = useState(false);
   const [totalComments, setTotalComments] = useState(0);
+  const [commentstate, setCommentState] = useState(false);
 
   const navigate = useNavigate();
 
   function openUrlId(userId) {
     navigate(pages.userPosts + userId);
   }
+
+  
+/*   const useInterval = (callback, delay) => {
+    const savedCallback = useRef();
+
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+
+      if (delay !== null) {
+        const id = setInterval(tick, delay);
+
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  };
+
+const checkForNewPosts = () => {
+
+const serverResponse = { newPostCount: Math.floor(Math.random() * 5) }; 
+
+const newPostsCountFromServer = serverResponse.newPostCount;
+
+if (newPostsCountFromServer > 0) {
+  setNewPostCount(newPostsCountFromServer);
+  setShowNewPostsButton(true); 
+}
+};
+
+useInterval(() => {
+checkForNewPosts();
+}, 15000);
+
+const handleShowNewPosts = () => {
+
+setNewPostCount(0);
+setShowNewPostsButton(false);
+};
+
+ */
 
   const fetchUrlMetadata = async (url) => {
     try {
@@ -47,13 +94,25 @@ export default function PostBox({ post }) {
     }
   };
 
+  useEffect(() => {
+    const promiseLikes = axios.get(backendroute.getlikes + post.id, headersAuth(user.token));
+    promiseLikes.then((res) => {
+      setPostLikes(res.data);
+    });
+
+    if (post.url) {
+      fetchUrlMetadata(post.url);
+    }
+  }, [post.id, post.url, user]);
+
+
   const startEditing = () => {
     setIsEditing(true);
     setTimeout(() => {
       if (textInputRef.current) {
         textInputRef.current.focus();
       }
-    }, 0); // Defina um pequeno atraso, como 0ms, para aplicar o foco após a atualização do estado.
+    }, 0);
   };
 
   const handleCancelEdit = () => {
@@ -183,6 +242,11 @@ export default function PostBox({ post }) {
     removeItem(postId);
   };
 
+  function showComments() {
+    console.log(commentstate)
+      setCommentState(!commentstate)
+  }
+
   return (
     <>
       <Container data-test="post">
@@ -226,11 +290,14 @@ export default function PostBox({ post }) {
               </SCTooltip>
             </LikeTooltip>
           </Icon>
+          <CommentContainer>
+            <IoChatbubblesOutline
+              size={20}
+              color="ffffff"
+              onClick={() => showComments()}
+            />
+          </CommentContainer>
 
-          <IoChatbubblesOutline
-            size={20}
-            color="ffffff"
-          />
           <SCQntLikes>
             {totalComments} comments
           </SCQntLikes>
@@ -379,6 +446,13 @@ export default function PostBox({ post }) {
           )}
         </ContainerContent>
       </Container>
+      <Comments
+        setTotalComments={setTotalComments}
+        commentstate={commentstate}
+        postId={post.id}
+        isRepost={user.username}
+        whoPosted={post.userId}
+      />
     </>
   );
 }
@@ -620,3 +694,10 @@ const SCTooltipText = styled.p`
   color: black;
   text-align: center;
 `;
+const CommentContainer = styled.div`
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+    cursor: pointer;
+ `
