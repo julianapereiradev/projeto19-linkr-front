@@ -45,7 +45,6 @@ export default function HashtagPage() {
               <div>There are no posts about this hashtag yet!</div>
             </ContainerText>
           )}
-
         </PostsContainer>
         <Sidebar />
       </PageContainer>

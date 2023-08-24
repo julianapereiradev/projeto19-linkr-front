@@ -14,6 +14,9 @@ export const Title = styled.h1`
   font-weight: 700;
   font-size: 43px;
   color: #FFFFFF;
+  @media(max-width: 600px) {
+    margin-left: 20px;
+  }
 `;
 
 export const PostsContainer = styled.div`
@@ -22,6 +25,9 @@ export const PostsContainer = styled.div`
   width: 50%;
   row-gap: 20px;
   margin-top: 50px;
+  @media(max-width: 600px) {
+    width: 100%
+  }
 `;
 
 export const ContainerText = styled.div`

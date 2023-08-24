@@ -33,9 +33,9 @@ export default function UserPostsPage() {
     axios
       .get(backendroute.getAllPostsByUserId + id, headersAuth(user.token))
       .then((resp) => {
-        console.log(resp.data)
+        console.log(resp.data.isFollowing)
         setuserPosts(resp.data.posts);
-        if (!resp.data.isFollowing) {
+        if (resp.data.isFollowing == "yes") {
           setFollowButton({ content: "Unfollow", background: "#FFFFFF", color: "#1877F2" });
         } else {
           setFollowButton({ content: "Follow", background: "#1877F2", color: "#FFFFFF" });
@@ -55,19 +55,23 @@ export default function UserPostsPage() {
 
   function followUser() {
     setFollowButton({ disabled: true });
-    console.log(backendroute.followUser + id)
+    const data = {
+      followerId: Number(id),
+      followingId: user.lastuserId
+    };
+    console.log(data);
     axios
-      .post(backendroute.followUser + id)
+      .post(backendroute.followUser, data, headersAuth(user.token))
       .then(res => {
         console.log(res.data)
-        if (res.data = "followed") {
+        if (res.data == "followed") {
           setFollowButton({ content: "Unfollow", background: "#FFFFFF", color: "#1877F2" });
         } else {
           setFollowButton({ content: "Follow", background: "#1877F2", color: "#FFFFFF" });
         }
       })
       .catch(res => {
-        console.log("erro ao seguir", res.data)
+        alert("Erro ao seguir!", res.data)
       });
 
       setFollowButton({ disabled: false }) 
