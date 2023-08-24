@@ -56,7 +56,7 @@ export default function TimelinePage() {
   function loadFunc(page) {
     if (!loading) {
       setLoading(true);
-      const page = currentPage + 1; 
+      const page = currentPage + 1;
       const offset = (page - 1) * 10;
       axios.get(`${backendroute.getAllPosts}?offset=${offset}`, headersAuth(user.token))
         .then((res) => {
@@ -70,7 +70,6 @@ export default function TimelinePage() {
         })
         .catch((err) => {
           console.error('Error fetching posts:', err);
-          // Lide com erros de carregamento aqui
         })
         .finally(() => {
           setLoading(false);
@@ -98,7 +97,7 @@ export default function TimelinePage() {
         setContent("");
         setPublishing(false);
         setDisable(false);
-        alert("Link publicado com sucesso!"); // Mostrar uma mensagem de sucesso.
+        alert("Link publicado com sucesso!"); 
       })
       .catch((error) => {
         console.error('Error publishing link:', error);
@@ -110,40 +109,43 @@ export default function TimelinePage() {
 
   return (
     <>
-      {/* Cabeçalho, etc. */}
 
-      <ContainerTimeline>
-        <ContainerPost>
-          <ColorText>timeline</ColorText>
-          <PublishBox
-            user={user}
-            url={url}
-            content={content}
-            disable={disable}
-            publishing={publishing}
-            onUrlChange={(e) => setUrl(e.target.value)}
-            onContentChange={(e) => setContent(e.target.value)}
-            onPublish={postUrlLink}
-          />
+      <Header />
+      <PageContainer>
+        <ContainerTimeline>
+          <ContainerPost>
+            <ColorText>timeline</ColorText>
+            <PublishBox
+              user={user}
+              url={url}
+              content={content}
+              disable={disable}
+              publishing={publishing}
+              onUrlChange={(e) => setUrl(e.target.value)}
+              onContentChange={(e) => setContent(e.target.value)}
+              onPublish={postUrlLink}
+            />
 
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={loadFunc}
-            hasMore={hasMore}
-            loader={<div key={0}>Loading...</div>}
-          >
-            {posts.length > 0 ? (
-              posts.map((post) => (
-                <PostBox key={post.id} post={post} />
-              ))
-            ) : (
-              <ContainerText>
-                <div data-test="message">Não existem posts!</div>
-              </ContainerText>
-            )}
-          </InfiniteScroll>
-        </ContainerPost>
-      </ContainerTimeline>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={loadFunc}
+              hasMore={hasMore}
+              loader={<div key={0}>Loading...</div>}
+            >
+              {posts.length > 0 ? (
+                posts.map((post) => (
+                  <PostBox key={post.id} post={post} />
+                ))
+              ) : (
+                <ContainerText>
+                  <div data-test="message">Não existem posts!</div>
+                </ContainerText>
+              )}
+            </InfiniteScroll>
+          </ContainerPost>
+        </ContainerTimeline>
+        <Sidebar />
+      </PageContainer>
     </>
   );
 }
