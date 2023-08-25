@@ -66,11 +66,11 @@ export default function Comments({ commentstate, postId, isRepost, whoPosted, se
     return (
         <>
             {!commentstate ? (
-                <CommentsContainer >
+                <CommentsContainer data-test="comment-box" >
                     <ContainerScroller>
                         {!comments ? '' :
                             (comments.map(c =>
-                                <Comment key={c.id}>
+                                <Comment data-test="comment" key={c.id}>
                                     <img src={c.pictureUrl} alt="" />
 
                                     <div>
@@ -91,13 +91,14 @@ export default function Comments({ commentstate, postId, isRepost, whoPosted, se
                         <WriteComment onSubmit={createComment}>
                             <img src={user ? user.pictureUrl : ''} alt="" />
                             <input
+                                data-test="comment-input"
                                 type="text"
                                 placeholder="write a comment..."
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
                                 required
                             />
-                            <ButtonSend type="submit">
+                            <ButtonSend data-test="comment-submit" type="submit">
                                 <IconSendComment />
                             </ButtonSend>
                         </WriteComment>
