@@ -119,7 +119,7 @@ export default function TimelinePage() {
         const newPostIds = newPosts.map((post) => post.id);
   
         if (newPostIds.length > 0) {
-          const latestSavedPostIds = savedPostIds.slice(-10); // Mantém apenas os últimos 10 IDs salvos.
+          const latestSavedPostIds = savedPostIds.slice(-10);
           const diffIds = newPostIds.filter((postId) => !latestSavedPostIds.includes(postId));
   
           setSavedPostIds([...latestSavedPostIds, ...newPostIds]);
