@@ -27,8 +27,11 @@ export default function Comments({ commentstate, postId, isRepost, whoPosted, se
             alert(err.response.data)
         })
 
-
-        //const promiseFollows = backendroute.
+        let followerId = user.id
+        console.log(followerId)
+        // const promiseFollows = axios.get(
+        //     backendroute.getFollowing + followerId
+        // )
 
         // promiseFollows.then((res) => {
         //     setFollowing(res.data)
@@ -65,7 +68,7 @@ export default function Comments({ commentstate, postId, isRepost, whoPosted, se
 
     return (
         <>
-            {!commentstate ? (
+            {commentstate ? (
                 <CommentsContainer data-test="comment-box" >
                     <ContainerScroller>
                         {!comments ? '' :

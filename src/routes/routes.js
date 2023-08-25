@@ -27,5 +27,6 @@ export const backendroute = {
     updatePostById: API_URL + '/posts/',
     followUser: API_URL + '/follow',
     getComments: API_URL + '/post/',
-    createComment: API_URL + '/post/'
+    createComment: API_URL + '/post/',
+    getFollowing: API_URL + '/follows/'
 }
