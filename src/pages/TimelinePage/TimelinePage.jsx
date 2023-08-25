@@ -26,7 +26,7 @@ export default function TimelinePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [newPostCount, setNewPostCount] = useState(0);
   const [showNewPostsButton, setShowNewPostsButton] = useState(false);
-const [savedPostIds, setSavedPostIds] = useState([]);
+  const [savedPostIds, setSavedPostIds] = useState([]);
 
 
 
@@ -117,18 +117,23 @@ const [savedPostIds, setSavedPostIds] = useState([]);
       .then((res) => {
         const newPosts = res.data;
         const newPostIds = newPosts.map((post) => post.id);
-        const diffIds = newPostIds.filter((postId) => !savedPostIds.includes(postId));
-
-        setSavedPostIds([...savedPostIds, ...newPostIds]);
-        setNewPostCount(diffIds.length);
-        setShowNewPostsButton(diffIds.length > 0);
+  
+        if (newPostIds.length > 0) {
+          const latestSavedPostIds = savedPostIds.slice(-10); // Mantém apenas os últimos 10 IDs salvos.
+          const diffIds = newPostIds.filter((postId) => !latestSavedPostIds.includes(postId));
+  
+          setSavedPostIds([...latestSavedPostIds, ...newPostIds]);
+          setNewPostCount(diffIds.length);
+          setShowNewPostsButton(diffIds.length > 0);
+        }
       })
       .catch((error) => {
         console.error('Error fetching posts:', error);
       });
   };
-
+  
   setInterval(checkForNewPosts, 15000);
+  
 
   const handleShowNewPosts = () => {
     setNewPostCount(0);
@@ -154,7 +159,7 @@ const [savedPostIds, setSavedPostIds] = useState([]);
               onPublish={postUrlLink}
             />
               {showNewPostsButton && (
-                <button onClick={handleShowNewPosts}>
+                <button data-test="load-btn" onClick={handleShowNewPosts}>
                   Ver {newPostCount} novo(s) post(s)
                 </button>
               )}
