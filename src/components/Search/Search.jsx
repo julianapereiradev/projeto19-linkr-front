@@ -9,7 +9,7 @@ export default function Search({ onClick }) {
   const { user } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [result, setResult] = useState("");
-
+  
   useEffect(() => {
     if (name.length >= 3) {
       const getData = setTimeout(() => {
