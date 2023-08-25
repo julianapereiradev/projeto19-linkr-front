@@ -174,7 +174,7 @@ setShowNewPostsButton(false);
       setTotalComments(res.data.length)
     });
     promiseComents.catch(err => {
-      console.log(err.message)
+      console.log(err.response.data)
     });
 
 
@@ -243,7 +243,6 @@ setShowNewPostsButton(false);
   };
 
   function showComments() {
-    console.log(commentstate)
       setCommentState(!commentstate)
   }
 
