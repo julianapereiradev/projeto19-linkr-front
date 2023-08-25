@@ -38,51 +38,6 @@ export default function PostBox({ post }) {
     navigate(pages.userPosts + userId);
   }
 
-  
-/*   const useInterval = (callback, delay) => {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-
-      if (delay !== null) {
-        const id = setInterval(tick, delay);
-
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  };
-
-const checkForNewPosts = () => {
-
-const serverResponse = { newPostCount: Math.floor(Math.random() * 5) }; 
-
-const newPostsCountFromServer = serverResponse.newPostCount;
-
-if (newPostsCountFromServer > 0) {
-  setNewPostCount(newPostsCountFromServer);
-  setShowNewPostsButton(true); 
-}
-};
-
-useInterval(() => {
-checkForNewPosts();
-}, 15000);
-
-const handleShowNewPosts = () => {
-
-setNewPostCount(0);
-setShowNewPostsButton(false);
-};
-
- */
-
   const fetchUrlMetadata = async (url) => {
     try {
       const response = await axios.get(

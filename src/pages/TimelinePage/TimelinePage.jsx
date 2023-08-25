@@ -24,6 +24,11 @@ export default function TimelinePage() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [newPostCount, setNewPostCount] = useState(0);
+  const [showNewPostsButton, setShowNewPostsButton] = useState(false);
+const [savedPostIds, setSavedPostIds] = useState([]);
+
+
 
   useEffect(() => {
     validateUser(user, setUser);
@@ -75,7 +80,7 @@ export default function TimelinePage() {
           setLoading(false);
         });
     }
-  }
+  };
 
   function postUrlLink(e) {
     e.preventDefault();
@@ -105,11 +110,34 @@ export default function TimelinePage() {
         setPublishing(false);
         setDisable(false);
       });
-  }
+  };
+
+  const checkForNewPosts = () => {
+    axios.get(backendroute.getAllPosts, { ...headersAuth(user.token) })
+      .then((res) => {
+        const newPosts = res.data;
+        const newPostIds = newPosts.map((post) => post.id);
+        const diffIds = newPostIds.filter((postId) => !savedPostIds.includes(postId));
+
+        setSavedPostIds([...savedPostIds, ...newPostIds]);
+        setNewPostCount(diffIds.length);
+        setShowNewPostsButton(diffIds.length > 0);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+      });
+  };
+
+  setInterval(checkForNewPosts, 15000);
+
+  const handleShowNewPosts = () => {
+    setNewPostCount(0);
+    setShowNewPostsButton(false);
+    window.local.reload();
+  };
 
   return (
     <>
-
       <Header />
       <PageContainer>
         <ContainerTimeline>
@@ -125,7 +153,11 @@ export default function TimelinePage() {
               onContentChange={(e) => setContent(e.target.value)}
               onPublish={postUrlLink}
             />
-
+              {showNewPostsButton && (
+                <button onClick={handleShowNewPosts}>
+                  Ver {newPostCount} novo(s) post(s)
+                </button>
+              )}
             <InfiniteScroll
               pageStart={0}
               loadMore={loadFunc}
