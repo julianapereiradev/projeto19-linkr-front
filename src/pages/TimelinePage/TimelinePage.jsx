@@ -133,7 +133,7 @@ const [savedPostIds, setSavedPostIds] = useState([]);
   const handleShowNewPosts = () => {
     setNewPostCount(0);
     setShowNewPostsButton(false);
-    window.local.reload();
+    window.location.reload();
   };
 
   return (
