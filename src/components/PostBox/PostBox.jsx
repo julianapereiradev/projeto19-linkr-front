@@ -292,13 +292,14 @@ setShowNewPostsButton(false);
           </Icon>
           <CommentContainer>
             <IoChatbubblesOutline
+              data-test="comment-btn"
               size={20}
               color="ffffff"
               onClick={() => showComments()}
             />
           </CommentContainer>
 
-          <SCQntLikes>
+          <SCQntLikes data-test="comment-counter">
             {totalComments} comments
           </SCQntLikes>
         </ContainerLike>
