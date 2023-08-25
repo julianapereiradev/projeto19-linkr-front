@@ -129,7 +129,7 @@ export default function PostBox({ post }) {
       setTotalComments(res.data.length)
     });
     promiseComents.catch(err => {
-      console.log(err.message)
+      console.log(err.response.data)
     });
 
 
@@ -198,7 +198,6 @@ export default function PostBox({ post }) {
   };
 
   function showComments() {
-    console.log(commentstate)
       setCommentState(!commentstate)
   }
 

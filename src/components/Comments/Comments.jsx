@@ -27,19 +27,17 @@ export default function Comments({ commentstate, postId, isRepost, whoPosted, se
             alert(err.response.data)
         })
 
-        let followerId = user.id
-        console.log(followerId)
-        // const promiseFollows = axios.get(
-        //     backendroute.getFollowing + followerId
-        // )
+        const promiseFollows = axios.get(
+            backendroute.getFollowing + user.lastuserId
+        )
 
-        // promiseFollows.then((res) => {
-        //     setFollowing(res.data)
+        promiseFollows.then((res) => {
+            setFollowing(res.data)
 
-        // })
-        // promiseFollows.catch((err) => {
-        //     alert(err.response.data)
-        // })
+        })
+        promiseFollows.catch((err) => {
+            alert(err.response.data)
+        })
 
 
     }, [lever, user])
@@ -66,6 +64,7 @@ export default function Comments({ commentstate, postId, isRepost, whoPosted, se
         })
     }
 
+    
     return (
         <>
             {commentstate ? (
